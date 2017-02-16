@@ -16,7 +16,6 @@ private:
 	std::shared_ptr<SpeedController> gearArmMotor;
 	std::shared_ptr<Encoder> encoder;
 	std::shared_ptr<DigitalInput> homeSwitch;
-	std::shared_ptr<PIDController> gearPID;
 	double m_targetPosition;
 
 public:
@@ -30,11 +29,7 @@ public:
 
 	void ControlGearArmMotor(double speed);
 	void StopGearArmMotor();
-
-	void SetGearPIDSetpoint(double position);
-	void SetTargetPosition(double position);
-	void EnableGearPID();
-	void DisableGearPID();
+	void MoveTo(double position);
 
 	bool GetHomeSwitch();
 	double GetTargetPosition();

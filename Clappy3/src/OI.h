@@ -3,6 +3,12 @@
 
 #include "WPILib.h"
 
+enum class ControlConfig
+{
+	JOYSTICK,
+	XBOXCONTOLLER
+};
+
 class OI {
 private:
 
@@ -15,6 +21,10 @@ private:
 	std::shared_ptr<JoystickButton> button5;
 	std::shared_ptr<JoystickButton> button6;
 
+	std::shared_ptr<XboxController> driveStickX;
+	std::shared_ptr<XboxController> gearStickX;
+
+	ControlConfig m_controlConfig;
 
 public:
 	OI();
@@ -22,6 +32,10 @@ public:
 	std::shared_ptr<Joystick> getDriveStick();
 	std::shared_ptr<Joystick> getGearStick();
 
+	std::shared_ptr<XboxController> getDriveStickX();
+	std::shared_ptr<XboxController> getGearStickX();
+
+	bool getControlConfig();
 };
 
 #endif

@@ -7,7 +7,8 @@ GearArm::GearArm() : Subsystem("GearArm") {
 	gearArmMotor = RobotMap::gearArmMotor;
 	encoder = RobotMap::gearArmEncoder;
 	homeSwitch = RobotMap::gearArmSwitch;
-	gearPID = RobotMap::gearArmPIDController;
+
+	encoder->SetDistancePerPulse(360.0/497);
 
 	m_targetPosition = 0;
 
@@ -34,24 +35,17 @@ void GearArm::StopGearArmMotor()
 	gearArmMotor->StopMotor();
 }
 
-void GearArm::SetGearPIDSetpoint(double position)
+void GearArm::MoveTo(double position)
 {
-	gearPID->SetSetpoint(position);
-}
-
-void GearArm::SetTargetPosition(double position)
-{
-	m_targetPosition = position;
-}
-
-void GearArm::EnableGearPID()
-{
-	gearPID->Enable();
-}
-
-void GearArm::DisableGearPID()
-{
-	gearPID->Disable();
+	while (encoder->GetDistance() < position - 10)
+	{
+		ControlGearArmMotor(-0.17);
+	}
+	while (encoder->GetDistance() > position + 10)
+	{
+		ControlGearArmMotor(0.45);
+	}
+	StopGearArmMotor();
 }
 
 bool GearArm::GetHomeSwitch()

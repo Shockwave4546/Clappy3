@@ -40,7 +40,6 @@ void Robot::TeleopInit() {
 		autonomousCommand->Cancel();
 
 	driveTrain->SetDirection(Direction::FORWARD);
-	gearArm->Zero();
 
 }
 
@@ -55,8 +54,9 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutString("Robot Direction", driveTrain->GetDirectionS());
 	SmartDashboard::PutString("GearPCM Status", gearPCM->GetPCMStatusS());
 	SmartDashboard::PutNumber("Encoder Position", gearArm->GetDegreesD());
-	SmartDashboard::PutNumber("gy", (Robot::oi->getGearStick()->GetY() * 360 < 0.0) ? 0.0 : Robot::oi->getGearStick()->GetY() * 360);
+	//SmartDashboard::PutNumber("gy", (Robot::oi->getGearStick()->GetY() * 360 < 0.0) ? 0.0 : Robot::oi->getGearStick()->GetY() * 360);
 	SmartDashboard::PutBoolean("Limit Switch", gearArm->GetHomeSwitch());
+	SmartDashboard::PutNumber("encoder", gearArm->GetDegreesD());
 
 }
 

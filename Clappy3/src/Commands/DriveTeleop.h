@@ -28,12 +28,14 @@ private:
 	double m_Z;
 	double m_scalar;
 	double m_sens;
+	ControlConfig m_controlConfig;
 
 	inline double Left();
 	inline double Right();
 	inline double CalculateSpeed(double scalar, double input);
 
 	std::shared_ptr<Joystick> driveStick;
+	std::shared_ptr<XboxController> driveStickX;
 
 };
 

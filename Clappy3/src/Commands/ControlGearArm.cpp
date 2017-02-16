@@ -3,13 +3,10 @@
 ControlGearArm::ControlGearArm() {
 
 	Requires(Robot::gearArm.get());
-
+	m_done = false;
 }
 
 void ControlGearArm::Initialize() {
-
-	Robot::gearArm->SetGearPIDSetpoint(Robot::gearArm->GetTargetPosition());
-	Robot::gearArm->EnableGearPID();
 
 }
 
@@ -26,5 +23,5 @@ void ControlGearArm::End() {
 }
 
 void ControlGearArm::Interrupted() {
-	Robot::gearArm->DisableGearPID();
+	//Robot::gearArm->DisableGearPID();
 }

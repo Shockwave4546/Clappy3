@@ -5,13 +5,24 @@ DriveTeleop::DriveTeleop(): Command() {
 
 	Requires(Robot::driveTrain.get());
 
+	m_controlConfig = static_cast<ControlConfig>(Robot::oi->getControlConfig());
+
 	m_X = 0.0;
 	m_Y = 0.0;
 	m_Z = 0.0;
 	m_scalar = 1.0;
 	m_sens = 0.0;
 
-	driveStick = Robot::oi->getDriveStick();
+	if (m_controlConfig == ControlConfig::JOYSTICK)
+	{
+		driveStick = Robot::oi->getDriveStick();
+		driveStickX = nullptr;
+	}
+	else
+	{
+		driveStickX = Robot::oi->getDriveStickX();
+		driveStick = nullptr;
+	}
 
 }
 
@@ -21,11 +32,22 @@ void DriveTeleop::Initialize() {
 
 void DriveTeleop::Execute() {
 
-	m_sens = -0.5 * driveStick->GetRawAxis(3) + 0.5;
-	m_X = driveStick->GetRawAxis(0);
-	m_Y = driveStick->GetRawAxis(1);
-	m_Z = 0.5 * -driveStick->GetRawAxis(2);
-	m_Z *= std::abs((2 / (1 + std::exp((m_Y==0) ? 0.01 : m_Z/m_Y)) - 1));
+	if (m_controlConfig == ControlConfig::JOYSTICK)
+	{
+		m_sens = -0.5 * driveStick->GetRawAxis(3) + 0.5;
+		m_X = driveStick->GetRawAxis(0);
+		m_Y = driveStick->GetRawAxis(1);
+		m_Z = 0.5 * -driveStick->GetRawAxis(2);
+	}
+	else
+	{
+		m_sens = 0.5;
+		m_X = driveStickX->GetX(XboxController::kRightHand);
+		m_Y = driveStickX->GetY(XboxController::kLeftHand);
+		m_Z = 0.5 * -driveStickX->GetX(XboxController::kLeftHand);
+	}
+
+	m_Z *= std::abs((2 / (1 + std::exp((m_Y==0) ? m_Z/0.01 : m_Z/m_Y)) - 1));
 
 	if (Robot::driveTrain->GetDirection() == static_cast<int>(Direction::FORWARD))
 	{
