@@ -5,22 +5,6 @@
 #include "WPILib.h"
 #include <string>
 
-
-
-enum class Position
-{
-	GROUND,
-	RAMP,
-	HOOK,
-	JOYSTICK
-};
-
-enum class ShootPosition
-{
-	DOWN,
-	UP
-};
-
 /**
  *
  *
@@ -32,24 +16,8 @@ private:
 	std::shared_ptr<SpeedController> gearArmMotor;
 	std::shared_ptr<Encoder> encoder;
 	std::shared_ptr<DigitalInput> homeSwitch;
-
-	std::shared_ptr<SpeedController> shootMotor;
-	std::shared_ptr<DigitalInput> upperLimit;
-	std::shared_ptr<DigitalInput> lowerLimit;
-
-	inline bool EncoderP();
-	inline bool GearArmMotorP();
-	inline bool HomeSwitchP();
-
-	inline bool ShootMotorP();
-	inline bool LowerLimitP();
-	inline bool UpperLimitP();
-
-	inline bool Ground();
-	inline bool Ramp();
-	inline bool Hook();
-	inline bool BetweenGroundAndRamp();
-	inline bool BetweenRampAndHook();
+	std::shared_ptr<PIDController> gearPID;
+	double m_targetPosition;
 
 public:
 
@@ -58,24 +26,19 @@ public:
 	void InitDefaultCommand();
 
 	void Zero();
-
 	void Home();
 
-	void MoveTo(double position);
-
 	void ControlGearArmMotor(double speed);
+	void StopGearArmMotor();
 
-	void ControlShootMotor(ShootPosition position);
+	void SetGearPIDSetpoint(double position);
+	void SetTargetPosition(double position);
+	void EnableGearPID();
+	void DisableGearPID();
 
 	bool GetHomeSwitch();
-
-	bool GetLowerLimit();
-
-	bool GetUpperLimit();
-
+	double GetTargetPosition();
 	double GetDegreesD();
-
-	bool Position(double position);
 
 };
 

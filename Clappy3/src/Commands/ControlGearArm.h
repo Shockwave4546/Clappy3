@@ -11,15 +11,12 @@
  */
 class ControlGearArm : public Command {
 public:
-	ControlGearArm(Position position);
+	ControlGearArm();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
-private:
-	bool m_done;
-	Position m_position;
 };
 
 #endif

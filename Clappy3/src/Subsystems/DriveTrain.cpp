@@ -12,8 +12,6 @@ DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
 
     m_direction = Direction::FORWARD;
 
-    StopMoving();
-
 }
 
 void DriveTrain::InitDefaultCommand() {
@@ -27,35 +25,30 @@ void DriveTrain::SetMotorSpeed(DriveMotor motor, double speed)
 	switch (motor)
 	{
 	case DriveMotor::TOP_LEFT:
-		if (topLeft != nullptr)
-			topLeft->Set(speed);
+		topLeft->Set(speed);
 		break;
 	case DriveMotor::TOP_RIGHT:
-		if (topRight != nullptr)
-			topRight->Set(speed);
+		topRight->Set(speed);
 		break;
 	case DriveMotor::BOTTOM_LEFT:
-		if (bottomLeft != nullptr)
-			bottomLeft->Set(speed);
+		bottomLeft->Set(speed);
 		break;
 	case DriveMotor::BOTTOM_RIGHT:
-		if (bottomRight != nullptr)
-			bottomRight->Set(speed);
+		bottomRight->Set(speed);
 		break;
 	case DriveMotor::CENTER:
-		if (center != nullptr)
-			center->Set(speed);
+		center->Set(speed);
 		break;
 	}
 }
 
 void DriveTrain::StopMoving()
 {
-	DriveTrain::SetMotorSpeed(DriveMotor::TOP_LEFT, 0.0);
-	DriveTrain::SetMotorSpeed(DriveMotor::TOP_RIGHT, 0.0);
-	DriveTrain::SetMotorSpeed(DriveMotor::BOTTOM_LEFT, 0.0);
-	DriveTrain::SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, 0.0);
-	DriveTrain::SetMotorSpeed(DriveMotor::CENTER, 0.0);
+	topLeft->StopMotor();
+	topRight->StopMotor();
+	bottomLeft->StopMotor();
+	bottomRight->StopMotor();
+	center->StopMotor();
 }
 
 void DriveTrain::ChangeDirection()
@@ -89,35 +82,15 @@ double DriveTrain::GetMotorD(DriveMotor motor)
 	switch(motor)
 	{
 	case DriveMotor::TOP_LEFT:
-		if (topLeft != nullptr)
-			return topLeft->Get();
-		else
-			return static_cast<int>(RobotError::POINTER_IS_NULL);
-		break;
+		return topLeft->Get();
 	case DriveMotor::TOP_RIGHT:
-		if (topRight != nullptr)
-			return topRight->Get();
-		else
-			return static_cast<int>(RobotError::POINTER_IS_NULL);
-		break;
+		return topRight->Get();
 	case DriveMotor::BOTTOM_LEFT:
-		if (bottomLeft != nullptr)
-			return bottomLeft->Get();
-		else
-			return static_cast<int>(RobotError::POINTER_IS_NULL);
-		break;
+		return bottomLeft->Get();
 	case DriveMotor::BOTTOM_RIGHT:
-		if (bottomRight != nullptr)
-			return bottomRight->Get();
-		else
-			return static_cast<int>(RobotError::POINTER_IS_NULL);
-		break;
+		return bottomRight->Get();
 	case DriveMotor::CENTER:
-		if (center != nullptr)
-			return center->Get();
-		else
-			return static_cast<int>(RobotError::POINTER_IS_NULL);
-		break;
+		return center->Get();
 	default:
 		return 0.0;
 	}

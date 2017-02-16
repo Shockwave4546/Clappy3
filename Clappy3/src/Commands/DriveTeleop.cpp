@@ -16,7 +16,7 @@ DriveTeleop::DriveTeleop(): Command() {
 }
 
 void DriveTeleop::Initialize() {
-	//Robot::driveTrain->StopMoving();
+
 }
 
 void DriveTeleop::Execute() {
@@ -24,7 +24,8 @@ void DriveTeleop::Execute() {
 	m_sens = -0.5 * driveStick->GetRawAxis(3) + 0.5;
 	m_X = driveStick->GetRawAxis(0);
 	m_Y = driveStick->GetRawAxis(1);
-	m_Z = -0.5 * driveStick->GetRawAxis(2);
+	m_Z = 0.5 * -driveStick->GetRawAxis(2);
+	m_Z *= std::abs((2 / (1 + std::exp((m_Z/m_Y==0) ? 0.01 : m_Z/m_Y)) - 1));
 
 	if (Robot::driveTrain->GetDirection() == static_cast<int>(Direction::FORWARD))
 	{
@@ -51,7 +52,7 @@ bool DriveTeleop::IsFinished() {
 }
 
 void DriveTeleop::End() {
-	Robot::driveTrain->StopMoving();
+
 }
 
 void DriveTeleop::Interrupted() {

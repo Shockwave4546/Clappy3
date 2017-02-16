@@ -21,8 +21,9 @@ void HomeGearArm::Execute() {
 		Robot::gearArm->ControlGearArmMotor(0.3);
 	}
 
-	Robot::gearArm->ControlGearArmMotor(0.0);
+	Robot::gearArm->StopGearArmMotor();
 	Robot::gearArm->Zero();
+	Robot::gearArm->SetGearPIDSetpoint(0);
 
 	m_done = true;
 }
@@ -34,10 +35,10 @@ bool HomeGearArm::IsFinished() {
 
 
 void HomeGearArm::End() {
-	Robot::gearArm->ControlGearArmMotor(0.0);
+
 }
 
 
 void HomeGearArm::Interrupted() {
-	Robot::gearArm->ControlGearArmMotor(0.0);
+	Robot::gearArm->SetGearPIDSetpoint(Robot::gearArm->GetDegreesD());
 }
