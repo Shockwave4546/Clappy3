@@ -25,7 +25,7 @@ void DriveTeleop::Execute() {
 	m_X = driveStick->GetRawAxis(0);
 	m_Y = driveStick->GetRawAxis(1);
 	m_Z = 0.5 * -driveStick->GetRawAxis(2);
-	m_Z *= std::abs((2 / (1 + std::exp((m_Z/m_Y==0) ? 0.01 : m_Z/m_Y)) - 1));
+	m_Z *= std::abs((2 / (1 + std::exp((m_Y==0) ? 0.01 : m_Z/m_Y)) - 1));
 
 	if (Robot::driveTrain->GetDirection() == static_cast<int>(Direction::FORWARD))
 	{
