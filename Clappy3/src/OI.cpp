@@ -9,7 +9,7 @@
 
 OI::OI() {
 
-	m_controlConfig = ControlConfig::XBOXCONTOLLER;
+	m_controlConfig = ControlConfig::JOYSTICK;
 
 	if (m_controlConfig == ControlConfig::JOYSTICK)
 	{

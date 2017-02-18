@@ -42,9 +42,9 @@ void DriveTeleop::Execute() {
 	else
 	{
 		m_sens = 0.5;
-		m_X = driveStickX->GetX(XboxController::kRightHand);
+		m_X = driveStickX->GetX(XboxController::kLeftHand);
 		m_Y = driveStickX->GetY(XboxController::kLeftHand);
-		m_Z = 0.5 * -driveStickX->GetX(XboxController::kLeftHand);
+		m_Z = 0.5 * -driveStickX->GetX(XboxController::kRightHand);
 	}
 
 	m_Z *= std::abs((2 / (1 + std::exp((m_Y==0) ? m_Z/0.01 : m_Z/m_Y)) - 1));

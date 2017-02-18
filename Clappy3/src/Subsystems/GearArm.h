@@ -17,6 +17,7 @@ private:
 	std::shared_ptr<Encoder> encoder;
 	std::shared_ptr<DigitalInput> homeSwitch;
 	double m_targetPosition;
+	inline double CalculateSpeed(double difference);
 
 public:
 
@@ -29,7 +30,8 @@ public:
 
 	void ControlGearArmMotor(double speed);
 	void StopGearArmMotor();
-	void MoveTo(double position);
+	void MoveToTargetPosition();
+	void SetTargetPosition(double position);
 
 	bool GetHomeSwitch();
 	double GetTargetPosition();

@@ -1,6 +1,7 @@
 #include "GearArm.h"
 #include "../RobotMap.h"
 #include "../Commands/ControlGearArm.h"
+#include <cmath>
 
 GearArm::GearArm() : Subsystem("GearArm") {
 
@@ -35,17 +36,21 @@ void GearArm::StopGearArmMotor()
 	gearArmMotor->StopMotor();
 }
 
-void GearArm::MoveTo(double position)
+void GearArm::MoveToTargetPosition()
 {
-	while (encoder->GetDistance() < position - 10)
+	while (GetDegreesD() < m_targetPosition)
 	{
-		ControlGearArmMotor(-0.17);
+		ControlGearArmMotor(-CalculateSpeed(GetDegreesD() - m_targetPosition));
 	}
-	while (encoder->GetDistance() > position + 10)
+	while (GetDegreesD() > m_targetPosition)
 	{
-		ControlGearArmMotor(0.45);
+		ControlGearArmMotor(CalculateSpeed(GetDegreesD() - m_targetPosition));
 	}
-	StopGearArmMotor();
+}
+
+void GearArm::SetTargetPosition(double position)
+{
+	m_targetPosition = position;
 }
 
 bool GearArm::GetHomeSwitch()
@@ -61,4 +66,9 @@ double GearArm::GetTargetPosition()
 double GearArm::GetDegreesD()
 {
 	return encoder->GetDistance();
+}
+
+inline double GearArm::CalculateSpeed(double difference)
+{
+	return std::abs(0.8 /(1 + std::exp(0.2 * difference)) - 0.4);
 }

@@ -13,7 +13,7 @@ void ChangeGearArmPos::Initialize() {
 
 void ChangeGearArmPos::Execute() {
 
-	Robot::gearArm->MoveTo(m_position);
+	Robot::gearArm->SetTargetPosition(m_position);
 	m_done = true;
 
 }
