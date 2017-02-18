@@ -52,10 +52,9 @@ void RobotMap::init() {
 
     gearArmMotor.reset(new VictorSP(5));
     lw->AddActuator("GearArm", "Motor", std::static_pointer_cast<VictorSP>(gearArmMotor));
-    //gearArmMotor->SetInverted(true);
     gearArmMotor->StopMotor();
 
-    gearArmEncoder.reset(new Encoder(0, 1, true));
+    gearArmEncoder.reset(new Encoder(1, 0, true));
     lw->AddSensor("GearArm", "Encoder", gearArmEncoder);
 
     gearArmSwitch.reset(new DigitalInput(2));

@@ -6,7 +6,8 @@
 enum class ControlConfig
 {
 	JOYSTICK,
-	XBOXCONTOLLER
+	XBOXCONTOLLER,
+	JDRIVE_XGEAR
 };
 
 class OI {

@@ -11,17 +11,19 @@ OI::OI() {
 
 	m_controlConfig = ControlConfig::JOYSTICK;
 
-	if (m_controlConfig == ControlConfig::JOYSTICK)
+	switch (m_controlConfig)
+	{
+	case ControlConfig::JOYSTICK:
 	{
 	    driveStick.reset(new Joystick(0));
 	    gearStick.reset(new Joystick(1));
 	    driveStickX = nullptr;
 	    gearStickX = nullptr;
 
-	    controlSwitchButton.reset(new JoystickButton(driveStick.get(), 1));
+	    controlSwitchButton.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
 
-	    toggleGearPCMButton.reset(new JoystickButton(gearStick.get(), 1));
+	    toggleGearPCMButton.reset(new JoystickButton(gearStick.get(), 1)); //Trigger
 	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM());
 
 	    homeGearArmButton.reset(new JoystickButton(gearStick.get(), 3));
@@ -35,18 +37,44 @@ OI::OI() {
 
 	    button6.reset(new JoystickButton(gearStick.get(), 6));  //Hook
 	    button6->WhenPressed(new ChangeGearArmPos(0));
+
+	    break;
 	}
-	else
+	case ControlConfig::XBOXCONTOLLER:
 	{
 	    driveStickX.reset(new XboxController(0));
 	    gearStickX.reset(new XboxController(1));
 	    driveStick = nullptr;
 	    gearStick = nullptr;
 
-	    /*
 	    controlSwitchButton.reset(new JoystickButton(driveStickX.get(), 6)); //Rb
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
-	*/
+
+	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
+	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM());
+
+	    homeGearArmButton.reset(new JoystickButton(gearStickX.get(), 5)); //Lb
+	    homeGearArmButton->WhenPressed(new HomeGearArm());
+
+	    button4.reset(new JoystickButton(gearStickX.get(), 1));	//Ground A
+	    button4->WhenPressed(new ChangeGearArmPos(90));
+
+	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
+	    button5->WhenPressed(new ChangeGearArmPos(45));
+
+	    button6.reset(new JoystickButton(gearStickX.get(), 4));  //Hook Y
+	    button6->WhenPressed(new ChangeGearArmPos(0));
+	}
+	case ControlConfig::JDRIVE_XGEAR:
+	{
+		driveStick.reset(new Joystick(0));
+		gearStickX.reset(new XboxController(1));
+		driveStickX = nullptr;
+		gearStick = nullptr;
+
+	    controlSwitchButton.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
+	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
+
 	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
 	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM());
 
@@ -62,6 +90,8 @@ OI::OI() {
 	    button6.reset(new JoystickButton(gearStickX.get(), 4));  //Hook Y
 	    button6->WhenPressed(new ChangeGearArmPos(0));
 
+		break;
+	}
 	}
 
 }
