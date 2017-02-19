@@ -4,13 +4,13 @@
 #include "WPILib.h"
 #include <string>
 
-enum class Direction
+enum Direction
 {
 	FORWARD,
 	REVERSE
 };
 
-enum class DriveMotor
+enum DriveMotor
 {
 	TOP_LEFT,
 	TOP_RIGHT,

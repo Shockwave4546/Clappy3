@@ -66,7 +66,7 @@ void DriveTrain::SetDirection(Direction direction)
 
 int DriveTrain::GetDirection()
 {
-	return static_cast<int>(m_direction);
+	return m_direction;
 }
 
 std::string DriveTrain::GetDirectionS()

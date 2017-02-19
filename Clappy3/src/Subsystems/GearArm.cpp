@@ -11,8 +11,8 @@ GearArm::GearArm() : Subsystem("GearArm") {
 
 	encoder->SetDistancePerPulse(360.0/497);
 
-	m_targetPosition = 0;
-
+	m_targetPosition = Position::HOOK;
+	m_targetPositionD = 0;
 }
 
 void GearArm::InitDefaultCommand() {
@@ -38,19 +38,47 @@ void GearArm::StopGearArmMotor()
 
 void GearArm::MoveToTargetPosition()
 {
-	while (GetDegreesD() < m_targetPosition)
+	switch(m_targetPosition)
 	{
-		ControlGearArmMotor(-CalculateSpeed(GetDegreesD() - m_targetPosition));
+	case Position::HOOK:
+		m_targetPositionD = 0;
+		break;
+	case Position::RAMP:
+		m_targetPositionD = 45;
+		break;
+	case Position::GROUND:
+		m_targetPositionD = 90;
+		break;
 	}
-	while (GetDegreesD() > m_targetPosition)
+
+	while (GetDegreesD() < m_targetPositionD)
 	{
-		ControlGearArmMotor(CalculateSpeed(GetDegreesD() - m_targetPosition));
+		ControlGearArmMotor(-CalculateSpeed(GetDegreesD() - m_targetPositionD));
+	}
+	while (GetDegreesD() > m_targetPositionD)
+	{
+		ControlGearArmMotor(CalculateSpeed(GetDegreesD() - m_targetPositionD));
 	}
 }
 
-void GearArm::SetTargetPosition(double position)
+void GearArm::SetTargetPosition(Position position)
 {
-	m_targetPosition = position;
+	if (position == Position::UP)
+		CycleUp();
+	else
+		CycleDown();
+}
+
+void GearArm::CycleUp()
+{
+	if (m_targetPosition + 1 < Position::MAX)
+		m_targetPosition += 1;
+}
+
+void GearArm::CycleDown()
+{
+	if (m_targetPosition - 1 > Position::MIN)
+		m_targetPosition -= 1;
 }
 
 bool GearArm::GetHomeSwitch()
@@ -58,9 +86,19 @@ bool GearArm::GetHomeSwitch()
 	return homeSwitch->Get();
 }
 
-double GearArm::GetTargetPosition()
+std::string GearArm::GetTargetPositionS()
 {
-	return m_targetPosition;
+	switch (m_targetPosition)
+	{
+	case Position::GROUND:
+		return "Ground";
+	case Position::RAMP:
+		return "Ramp";
+	case Position::HOOK:
+		return "Hook";
+	default:
+		return "Out Of Range";
+	}
 }
 
 double GearArm::GetDegreesD()

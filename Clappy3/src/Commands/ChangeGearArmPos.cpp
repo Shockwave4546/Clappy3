@@ -1,6 +1,6 @@
 #include "ChangeGearArmPos.h"
 
-ChangeGearArmPos::ChangeGearArmPos(double position) {
+ChangeGearArmPos::ChangeGearArmPos(Position position) {
 	Requires(Robot::gearArm.get());
 
 	m_position = position;

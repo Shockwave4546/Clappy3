@@ -28,7 +28,7 @@ private:
 	double m_Z;
 	double m_scalar;
 	double m_sens;
-	ControlConfig m_controlConfig;
+	int m_controlConfig;
 
 	inline double Left();
 	inline double Right();

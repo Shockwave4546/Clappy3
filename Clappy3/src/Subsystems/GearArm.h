@@ -5,6 +5,17 @@
 #include "WPILib.h"
 #include <string>
 
+enum Position
+{
+	MIN,
+	GROUND,
+	RAMP,
+	HOOK,
+	MAX,
+	UP,
+	DOWN
+};
+
 /**
  *
  *
@@ -16,7 +27,8 @@ private:
 	std::shared_ptr<SpeedController> gearArmMotor;
 	std::shared_ptr<Encoder> encoder;
 	std::shared_ptr<DigitalInput> homeSwitch;
-	double m_targetPosition;
+	int m_targetPosition;
+	double m_targetPositionD;
 	inline double CalculateSpeed(double difference);
 
 public:
@@ -31,10 +43,13 @@ public:
 	void ControlGearArmMotor(double speed);
 	void StopGearArmMotor();
 	void MoveToTargetPosition();
-	void SetTargetPosition(double position);
+	void SetTargetPosition(Position position);
+
+	void CycleUp();
+	void CycleDown();
 
 	bool GetHomeSwitch();
-	double GetTargetPosition();
+	std::string GetTargetPositionS();
 	double GetDegreesD();
 
 };

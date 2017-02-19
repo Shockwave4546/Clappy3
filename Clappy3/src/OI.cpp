@@ -9,7 +9,7 @@
 
 OI::OI() {
 
-	m_controlConfig = ControlConfig::JOYSTICK;
+	m_controlConfig = ControlConfig::JDRIVE_XGEAR;
 
 	switch (m_controlConfig)
 	{
@@ -30,13 +30,10 @@ OI::OI() {
 	    homeGearArmButton->WhenPressed(new HomeGearArm());
 
 	    button4.reset(new JoystickButton(gearStick.get(), 4));	//Ground
-	    button4->WhenPressed(new ChangeGearArmPos(90));
+	    button4->WhenPressed(new ChangeGearArmPos(Position::UP));
 
 	    button5.reset(new JoystickButton(gearStick.get(), 5));  //Ramp
-	    button5->WhenPressed(new ChangeGearArmPos(45));
-
-	    button6.reset(new JoystickButton(gearStick.get(), 6));  //Hook
-	    button6->WhenPressed(new ChangeGearArmPos(0));
+	    button5->WhenPressed(new ChangeGearArmPos(Position::DOWN));
 
 	    break;
 	}
@@ -57,13 +54,12 @@ OI::OI() {
 	    homeGearArmButton->WhenPressed(new HomeGearArm());
 
 	    button4.reset(new JoystickButton(gearStickX.get(), 1));	//Ground A
-	    button4->WhenPressed(new ChangeGearArmPos(90));
+	    button4->WhenPressed(new ChangeGearArmPos(Position::DOWN));
 
 	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
-	    button5->WhenPressed(new ChangeGearArmPos(45));
+	    button5->WhenPressed(new ChangeGearArmPos(Position::UP));
 
-	    button6.reset(new JoystickButton(gearStickX.get(), 4));  //Hook Y
-	    button6->WhenPressed(new ChangeGearArmPos(0));
+	    break;
 	}
 	case ControlConfig::JDRIVE_XGEAR:
 	{
@@ -82,13 +78,10 @@ OI::OI() {
 	    homeGearArmButton->WhenPressed(new HomeGearArm());
 
 	    button4.reset(new JoystickButton(gearStickX.get(), 1));	//Ground A
-	    button4->WhenPressed(new ChangeGearArmPos(90));
+	    button4->WhenPressed(new ChangeGearArmPos(Position::DOWN));
 
 	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
-	    button5->WhenPressed(new ChangeGearArmPos(45));
-
-	    button6.reset(new JoystickButton(gearStickX.get(), 4));  //Hook Y
-	    button6->WhenPressed(new ChangeGearArmPos(0));
+	    button5->WhenPressed(new ChangeGearArmPos(Position::UP));
 
 		break;
 	}
@@ -116,7 +109,7 @@ std::shared_ptr<XboxController> OI::getGearStickX()
 	return gearStickX;
 }
 
-bool OI::getControlConfig()
+int OI::getControlConfig()
 {
-	return static_cast<bool>(m_controlConfig);
+	return m_controlConfig;
 }

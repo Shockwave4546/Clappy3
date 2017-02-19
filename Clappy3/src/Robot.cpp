@@ -55,7 +55,6 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutString("GearPCM Status", gearPCM->GetPCMStatusS());
 	SmartDashboard::PutNumber("Encoder Position", gearArm->GetDegreesD());
 	SmartDashboard::PutBoolean("Limit Switch", gearArm->GetHomeSwitch());
-	SmartDashboard::PutNumber("encoder", gearArm->GetDegreesD());
 
 }
 

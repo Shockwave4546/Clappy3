@@ -6,14 +6,14 @@
 
 class ChangeGearArmPos : public Command {
 public:
-	ChangeGearArmPos(double position);
+	ChangeGearArmPos(Position position);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 private:
-	double m_position;
+	Position m_position;
 	bool m_done;
 };
 

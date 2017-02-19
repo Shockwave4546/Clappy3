@@ -3,7 +3,7 @@
 
 #include "WPILib.h"
 
-enum class ControlConfig
+enum ControlConfig
 {
 	JOYSTICK,
 	XBOXCONTOLLER,
@@ -36,7 +36,7 @@ public:
 	std::shared_ptr<XboxController> getDriveStickX();
 	std::shared_ptr<XboxController> getGearStickX();
 
-	bool getControlConfig();
+	int getControlConfig();
 };
 
 #endif
