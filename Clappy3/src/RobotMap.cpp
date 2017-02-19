@@ -50,8 +50,8 @@ void RobotMap::init() {
 
 
 
-    gearArmMotor.reset(new VictorSP(5));
-    lw->AddActuator("GearArm", "Motor", std::static_pointer_cast<VictorSP>(gearArmMotor));
+    gearArmMotor.reset(new TalonSRX(5));
+    lw->AddActuator("GearArm", "Motor", std::static_pointer_cast<TalonSRX>(gearArmMotor));
     gearArmMotor->StopMotor();
 
     gearArmEncoder.reset(new Encoder(1, 0, true));

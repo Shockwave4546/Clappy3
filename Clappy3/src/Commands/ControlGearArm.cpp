@@ -4,6 +4,7 @@ ControlGearArm::ControlGearArm() {
 
 	Requires(Robot::gearArm.get());
 	m_done = false;
+	m_targetPosition = 0;
 }
 
 void ControlGearArm::Initialize() {
@@ -11,7 +12,17 @@ void ControlGearArm::Initialize() {
 }
 
 void ControlGearArm::Execute() {
-	Robot::gearArm->MoveToTargetPosition();
+
+		m_targetPosition = Robot::gearArm->GetTargetPositionD();
+
+		if (Robot::gearArm->GetDegreesD() < m_targetPosition)
+		{
+			Robot::gearArm->ControlGearArmMotor(-Robot::gearArm->CalculateSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
+		}
+		if (Robot::gearArm->GetDegreesD() > m_targetPosition)
+		{
+			Robot::gearArm->ControlGearArmMotor(Robot::gearArm->CalculateSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
+		}
 }
 
 bool ControlGearArm::IsFinished() {

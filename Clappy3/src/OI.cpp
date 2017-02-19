@@ -9,7 +9,7 @@
 
 OI::OI() {
 
-	m_controlConfig = ControlConfig::JDRIVE_XGEAR;
+	m_controlConfig = ControlConfig::XBOXCONTOLLER;
 
 	switch (m_controlConfig)
 	{

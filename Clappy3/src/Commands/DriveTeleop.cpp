@@ -41,7 +41,7 @@ void DriveTeleop::Execute() {
 	}
 	else
 	{
-		m_sens = 0.5;
+		m_sens = 1;
 		m_X = driveStickX->GetX(XboxController::kLeftHand);
 		m_Y = driveStickX->GetY(XboxController::kLeftHand);
 		m_Z = 0.5 * -driveStickX->GetX(XboxController::kRightHand);

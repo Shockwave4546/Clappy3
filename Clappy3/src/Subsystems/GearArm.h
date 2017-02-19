@@ -29,7 +29,6 @@ private:
 	std::shared_ptr<DigitalInput> homeSwitch;
 	int m_targetPosition;
 	double m_targetPositionD;
-	inline double CalculateSpeed(double difference);
 
 public:
 
@@ -47,10 +46,12 @@ public:
 
 	void CycleUp();
 	void CycleDown();
+	double CalculateSpeed(double difference);
 
 	bool GetHomeSwitch();
 	std::string GetTargetPositionS();
 	double GetDegreesD();
+	double GetTargetPositionD();
 
 };
 

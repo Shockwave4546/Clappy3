@@ -19,6 +19,7 @@ public:
 	void Interrupted();
 private:
 	bool m_done;
+	double m_targetPosition;
 };
 
 #endif
