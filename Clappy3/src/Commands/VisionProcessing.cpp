@@ -11,6 +11,8 @@ VisionProcessing::VisionProcessing() {
 	cvSink = CameraServer::GetInstance()->GetVideo();
 
 	CameraServer::GetInstance()->PutVideo("camera", 50, 100);
+
+	test = 0;
 }
 
 // Called just before this Command runs the first time
@@ -21,6 +23,8 @@ void VisionProcessing::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionProcessing::Execute() {
 
+	SmartDashboard::PutNumber("test half second", ++test);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 // Make this return true when this Command no longer needs to run execute()

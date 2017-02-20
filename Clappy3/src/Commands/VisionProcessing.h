@@ -19,6 +19,7 @@ private:
 	cs::CvSink cvSink;
 	cv::Mat source;
 	cv::Mat output;
+	int test;
 };
 
 #endif  // VisionProcessing_H
