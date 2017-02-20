@@ -27,6 +27,7 @@ private:
 	std::shared_ptr<SpeedController> gearArmMotor;
 	std::shared_ptr<Encoder> encoder;
 	std::shared_ptr<DigitalInput> homeSwitch;
+	std::shared_ptr<DoubleSolenoid> solenoid;
 	int m_targetPosition;
 	double m_targetPositionD;
 
@@ -43,6 +44,10 @@ public:
 	void StopGearArmMotor();
 	void MoveToTargetPosition();
 	void SetTargetPosition(Position position);
+
+	void Forward();
+	void Reverse();
+	DoubleSolenoid::Value GetSolenoidValue();
 
 	void CycleUp();
 	void CycleDown();

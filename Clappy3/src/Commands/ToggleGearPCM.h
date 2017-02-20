@@ -11,7 +11,7 @@
  */
 class ToggleGearPCM : public Command {
 public:
-	ToggleGearPCM();
+	ToggleGearPCM(PCMStatus status);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -19,6 +19,7 @@ public:
 	void Interrupted();
 private:
 	bool m_done;
+	PCMStatus m_status;
 };
 
 #endif  // ToggleGearPCM_H

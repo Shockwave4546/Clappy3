@@ -6,6 +6,8 @@
 #include "Commands/ToggleRobotDirection.h"
 #include "Commands/ChangeGearArmPos.h"
 #include "Commands/HomeGearArm.h"
+#include "Commands/GrabGearFromGround.h"
+#include "Commands/GrabGearFromRamp.h"
 
 OI::OI() {
 
@@ -24,7 +26,7 @@ OI::OI() {
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
 
 	    toggleGearPCMButton.reset(new JoystickButton(gearStick.get(), 1)); //Trigger
-	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM());
+	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::TOGGLE));
 
 	    homeGearArmButton.reset(new JoystickButton(gearStick.get(), 3));
 	    homeGearArmButton->WhenPressed(new HomeGearArm());
@@ -48,7 +50,7 @@ OI::OI() {
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
 
 	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
-	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM());
+	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::TOGGLE));
 
 	    homeGearArmButton.reset(new JoystickButton(gearStickX.get(), 5)); //Lb
 	    homeGearArmButton->WhenPressed(new HomeGearArm());
@@ -58,6 +60,12 @@ OI::OI() {
 
 	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
 	    button5->WhenPressed(new ChangeGearArmPos(Position::UP));
+
+	    button6.reset(new JoystickButton(gearStickX.get(), 3)); //X
+	    button6->WhenPressed(new GrabGearFromGround());
+
+	    button7.reset(new JoystickButton(gearStickX.get(), 4)); //Y
+	    button7->WhenPressed(new GrabGearFromRamp());
 
 	    break;
 	}
@@ -72,7 +80,7 @@ OI::OI() {
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
 
 	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
-	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM());
+	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::TOGGLE));
 
 	    homeGearArmButton.reset(new JoystickButton(gearStickX.get(), 5)); //Lb
 	    homeGearArmButton->WhenPressed(new HomeGearArm());
@@ -82,6 +90,12 @@ OI::OI() {
 
 	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
 	    button5->WhenPressed(new ChangeGearArmPos(Position::UP));
+
+	    button6.reset(new JoystickButton(gearStickX.get(), 3)); //X
+	    button6->WhenPressed(new GrabGearFromGround());
+
+	    button7.reset(new JoystickButton(gearStickX.get(), 4)); //Y
+	    button7->WhenPressed(new GrabGearFromRamp());
 
 		break;
 	}

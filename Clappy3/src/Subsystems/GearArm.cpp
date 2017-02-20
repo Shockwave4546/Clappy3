@@ -7,6 +7,7 @@ GearArm::GearArm() : Subsystem("GearArm") {
 	gearArmMotor = RobotMap::gearArmMotor;
 	encoder = RobotMap::gearArmEncoder;
 	homeSwitch = RobotMap::gearArmSwitch;
+	solenoid = RobotMap::gearShootSolenoid;
 
 	encoder->SetDistancePerPulse(360.0/497);
 
@@ -17,7 +18,6 @@ GearArm::GearArm() : Subsystem("GearArm") {
 void GearArm::InitDefaultCommand() {
 
 	SetDefaultCommand(new ControlGearArm());
-
 }
 
 void GearArm::Zero()
@@ -37,10 +37,39 @@ void GearArm::StopGearArmMotor()
 
 void GearArm::SetTargetPosition(Position position)
 {
-	if (position == Position::UP)
+	switch (position)
+	{
+	case Position::UP:
 		CycleUp();
-	else
+		break;
+	case Position::DOWN:
 		CycleDown();
+		break;
+	case Position::HOOK:
+		m_targetPosition = Position::HOOK;
+		break;
+	case Position::RAMP:
+		m_targetPosition = Position::RAMP;
+		break;
+	default:
+		m_targetPosition = Position::GROUND;
+		break;
+	}
+}
+
+void GearArm::Forward()
+{
+	solenoid->Set(DoubleSolenoid::Value::kForward);
+}
+
+void GearArm::Reverse()
+{
+	solenoid->Set(DoubleSolenoid::Value::kReverse);
+}
+
+DoubleSolenoid::Value GearArm::GetSolenoidValue()
+{
+	return solenoid->Get();
 }
 
 void GearArm::CycleUp()

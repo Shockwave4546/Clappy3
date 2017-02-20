@@ -2,7 +2,7 @@
 #include "../RobotMap.h"
 #include "../Commands/VisionProcessing.h"
 
-Vision::Vision() : Subsystem("ExampleSubsystem") {
+Vision::Vision() : Subsystem("Vision") {
 
 }
 

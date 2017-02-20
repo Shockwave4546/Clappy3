@@ -2,9 +2,11 @@
 
 #include "../Subsystems/GearPCM.h"
 
-ToggleGearPCM::ToggleGearPCM() {
+ToggleGearPCM::ToggleGearPCM(PCMStatus status)
+{
 	Requires(Robot::gearPCM.get());
 	m_done = false;
+	m_status = status;
 }
 
 void ToggleGearPCM::Initialize() {
@@ -13,10 +15,17 @@ void ToggleGearPCM::Initialize() {
 
 void ToggleGearPCM::Execute() {
 
-	if (Robot::gearPCM->GetPCMStatus() == static_cast<bool>(PCMStatus::OPENED))
-		Robot::gearPCM->SetGearPCM(PCMStatus::CLOSED);
+	if (m_status == PCMStatus::TOGGLE)
+	{
+		if (Robot::gearPCM->GetPCMStatus() == static_cast<bool>(PCMStatus::OPENED))
+			Robot::gearPCM->SetGearPCM(PCMStatus::CLOSED);
+		else
+			Robot::gearPCM->SetGearPCM(PCMStatus::OPENED);
+	}
 	else
-		Robot::gearPCM->SetGearPCM(PCMStatus::OPENED);
+		Robot::gearPCM->SetGearPCM(m_status);
+
+
 
 	m_done = true;
 

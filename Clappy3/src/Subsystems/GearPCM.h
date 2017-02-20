@@ -8,7 +8,8 @@
 enum class PCMStatus
 {
 	OPENED,
-	CLOSED
+	CLOSED,
+	TOGGLE
 };
 
 /**
