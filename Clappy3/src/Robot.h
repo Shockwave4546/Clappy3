@@ -10,6 +10,7 @@
 #include "Subsystems/GearPCM.h"
 #include "Subsystems/GearArm.h"
 #include "OI.h"
+#include "Subsystems/Vision.h"
 
 class Robot : public IterativeRobot {
 public:
@@ -20,6 +21,7 @@ public:
     static std::shared_ptr<DriveTrain> driveTrain;
     static std::shared_ptr<GearPCM> gearPCM;
     static std::shared_ptr<GearArm> gearArm;
+    static std::shared_ptr<Vision> vision;
 
 	virtual void RobotInit();
 	virtual void DisabledInit();
@@ -29,7 +31,5 @@ public:
 	virtual void TeleopInit();
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
-
-	bool GetControlConfig();
 };
 #endif
