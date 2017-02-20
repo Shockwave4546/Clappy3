@@ -69,10 +69,8 @@ std::string GearArm::GetTargetPositionS()
 		return "Ground";
 	case Position::RAMP:
 		return "Ramp";
-	case Position::HOOK:
-		return "Hook";
 	default:
-		return "Out Of Range";
+		return "Hook";
 	}
 }
 
@@ -81,9 +79,9 @@ double GearArm::GetTargetPositionD()
 	switch (m_targetPosition)
 	{
 	case Position::GROUND:
-		return 90;
+		return 80;
 	case Position::RAMP:
-		return 45;
+		return 40;
 	default:
 		return 0;
 	}
@@ -96,5 +94,5 @@ double GearArm::GetDegreesD()
 
 double GearArm::CalculateSpeed(double difference)
 {
-	return std::abs(0.8 /(1 + std::exp(0.2 * difference)) - 0.4);
+	return std::abs(0.8 /(1 + std::exp(difference)) - 0.4);
 }
