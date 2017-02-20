@@ -10,8 +10,8 @@ VisionProcessing::VisionProcessing() {
 
 	cvSink = CameraServer::GetInstance()->GetVideo();
 
-	camera.SetResolution(480, 640);
-	outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 480, 640);
+	camera.SetResolution(640, 480);
+	outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
 
 
 	test = 0;
