@@ -1,7 +1,6 @@
 #include "GearArm.h"
 #include "../RobotMap.h"
 #include "../Commands/ControlGearArm.h"
-#include <cmath>
 
 GearArm::GearArm() : Subsystem("GearArm") {
 

@@ -10,9 +10,14 @@
 
 namespace Calculations
 {
-	double HorizontalDistanceFromCamera(double cameraHeight, double centerOffset, double vFOV, double pMax, double ph)
+	double HorizontalDistanceFromCameraGround(double ph)
 	{
-		return cameraHeight * std::tan(pi / 180 * (centerOffset - (vFOV/2) + (ph * vFOV / pMax)));
+		return cameraHeight * std::tan(pi / 180 * (angleOffset - (vFOV/2) + (ph * vFOV / pMax)));
+	}
+
+	double HorizontalDistanceFromCameraTape(double ph)
+	{
+		return (cameraHeight - tapeHeight) * std::tan(pi / 180 * (angleOffset - (vFOV/2) + (ph * vFOV / pMax)));
 	}
 
 	double GearArmSpeed(double difference)

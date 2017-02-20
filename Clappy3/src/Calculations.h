@@ -10,12 +10,18 @@
 
 namespace Calculations
 {
-	double HorizontalDistanceFromCamera(double cameraHeight, double centerOffset, double vFOV, double pMax, double ph);
+	double HorizontalDistanceFromCameraGround(double ph);
+	double HorizontalDistanceFromCameraTape(double ph);
 	double GearArmSpeed(double difference);
 	double DriveMotorSpeed(double scalar, double input, double sens);
 	double TwistAxisScalar(double y, double z);
 
 	const double pi{ 3.14159265359 };
+	const double cameraHeight{ 0 };
+	const double tapeHeight{ 0 };
+	const double angleOffset{ 0 };
+	const double pMax{ 0 };
+	const double vFOV{ 33.6 }; 			//68.5 * sin(29.4)
 }
 
 
