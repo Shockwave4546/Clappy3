@@ -10,7 +10,9 @@ VisionProcessing::VisionProcessing() {
 
 	cvSink = CameraServer::GetInstance()->GetVideo();
 
-	CameraServer::GetInstance()->PutVideo("camera", 50, 100);
+	camera.SetResolution(480, 640);
+	outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 480, 640);
+
 
 	test = 0;
 }
@@ -23,8 +25,9 @@ void VisionProcessing::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionProcessing::Execute() {
 
-	SmartDashboard::PutNumber("test half second", ++test);
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	cvSink.GrabFrame(source);
+	cv::cvtColor(source, output, cv::COLOR_BGR2GRAY);
+	outputStreamStd.PutFrame(output);
 }
 
 // Make this return true when this Command no longer needs to run execute()

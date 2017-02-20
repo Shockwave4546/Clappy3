@@ -19,6 +19,7 @@ private:
 	cs::CvSink cvSink;
 	cv::Mat source;
 	cv::Mat output;
+	cs::CvSource outputStreamStd;
 	int test;
 };
 
