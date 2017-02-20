@@ -91,8 +91,3 @@ double GearArm::GetDegreesD()
 {
 	return encoder->GetDistance();
 }
-
-double GearArm::CalculateSpeed(double difference)
-{
-	return std::abs(0.8 /(1 + std::exp(difference)) - 0.4);
-}

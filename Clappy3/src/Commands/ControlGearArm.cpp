@@ -1,4 +1,5 @@
 #include "ControlGearArm.h"
+#include "../Calculations.h"
 
 ControlGearArm::ControlGearArm() {
 
@@ -17,11 +18,11 @@ void ControlGearArm::Execute() {
 
 		if (Robot::gearArm->GetDegreesD() < m_targetPosition)
 		{
-			Robot::gearArm->ControlGearArmMotor(-Robot::gearArm->CalculateSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
+			Robot::gearArm->ControlGearArmMotor(-Calculations::GearArmSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
 		}
 		if (Robot::gearArm->GetDegreesD() > m_targetPosition)
 		{
-			Robot::gearArm->ControlGearArmMotor(Robot::gearArm->CalculateSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
+			Robot::gearArm->ControlGearArmMotor(Calculations::GearArmSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
 		}
 }
 

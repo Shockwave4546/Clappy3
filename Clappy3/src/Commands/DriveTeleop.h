@@ -32,7 +32,6 @@ private:
 
 	inline double Left();
 	inline double Right();
-	inline double CalculateSpeed(double scalar, double input);
 
 	std::shared_ptr<Joystick> driveStick;
 	std::shared_ptr<XboxController> driveStickX;

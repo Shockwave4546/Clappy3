@@ -46,7 +46,6 @@ public:
 
 	void CycleUp();
 	void CycleDown();
-	double CalculateSpeed(double difference);
 
 	bool GetHomeSwitch();
 	std::string GetTargetPositionS();
