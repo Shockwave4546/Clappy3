@@ -14,6 +14,8 @@ namespace Calculations
 	double HorizontalDistanceFromCameraTape(double ph);
 	double GearArmSpeed(double difference);
 	double DriveMotorSpeed(double scalar, double input, double sens);
+	double DriveMotorLeft(double y, double z);
+	double DriveMotorRight(double y, double z);
 	double TwistAxisScalar(double y, double z);
 
 	const double pi{ 3.14159265359 };

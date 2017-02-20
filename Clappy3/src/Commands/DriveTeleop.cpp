@@ -51,19 +51,19 @@ void DriveTeleop::Execute() {
 
 	if (Robot::driveTrain->GetDirection() == Direction::FORWARD)
 	{
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_LEFT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Left(), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Right(), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Left(), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Right(), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, Calculations::DriveMotorSpeed(m_scalar, m_X, m_sens));
 
 	}
 	else
 	{
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_LEFT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Right(), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Left(), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Right(), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, DriveTeleop::Left(), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, Calculations::DriveMotorSpeed(m_scalar, -m_X, m_sens));
 
 	}
@@ -81,12 +81,4 @@ void DriveTeleop::Interrupted() {
 	Robot::driveTrain->StopMoving();
 }
 
-inline double DriveTeleop::Left()
-{
-	return -(m_Y + m_Z);
-}
 
-inline double DriveTeleop::Right()
-{
-	return m_Y - m_Z;
-}

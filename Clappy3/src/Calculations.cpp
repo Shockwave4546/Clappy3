@@ -30,6 +30,16 @@ namespace Calculations
 		return (2 * scalar / (1 + std::exp(sens * input))) - scalar;
 	}
 
+	double DriveMotorLeft(double y, double z)
+	{
+		return -(y + z);
+	}
+
+	double DriveMotorRight(double y, double z)
+	{
+		return y - z;
+	}
+
 	double TwistAxisScalar(double y, double z)
 	{
 		return std::abs((2 / (1 + std::exp((y==0) ? z/0.01 : z/y)) - 1));
