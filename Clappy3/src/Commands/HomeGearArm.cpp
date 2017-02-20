@@ -23,6 +23,8 @@ void HomeGearArm::Execute() {
 
 	Robot::gearArm->StopGearArmMotor();
 	Robot::gearArm->Zero();
+	Robot::gearArm->CycleUp();
+	Robot::gearArm->CycleUp();
 
 	m_done = true;
 }
