@@ -59,17 +59,22 @@ void GearArm::SetTargetPosition(Position position)
 
 void GearArm::Forward()
 {
-	solenoid->Set(DoubleSolenoid::Value::kForward);
+	if (SolenoidP())
+		solenoid->Set(frc::DoubleSolenoid::Value::kForward);
 }
 
 void GearArm::Reverse()
 {
-	solenoid->Set(DoubleSolenoid::Value::kReverse);
+	if (SolenoidP())
+		solenoid->Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
-DoubleSolenoid::Value GearArm::GetSolenoidValue()
+frc::DoubleSolenoid::Value GearArm::GetSolenoidValue()
 {
-	return solenoid->Get();
+	if (SolenoidP())
+		return solenoid->Get();
+	else
+		return frc::DoubleSolenoid::Value::kOff;
 }
 
 void GearArm::CycleUp()
@@ -118,4 +123,9 @@ double GearArm::GetTargetPositionD()
 double GearArm::GetDegreesD()
 {
 	return encoder->GetDistance();
+}
+
+inline bool GearArm::SolenoidP()
+{
+	return solenoid != nullptr;
 }

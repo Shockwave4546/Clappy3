@@ -11,6 +11,7 @@
 #include "Subsystems/GearArm.h"
 #include "OI.h"
 #include "Subsystems/Vision.h"
+#include "Subsystems/Climber.h"
 
 class Robot : public IterativeRobot {
 public:
@@ -22,6 +23,7 @@ public:
     static std::shared_ptr<GearPCM> gearPCM;
     static std::shared_ptr<GearArm> gearArm;
     static std::shared_ptr<Vision> vision;
+    static std::shared_ptr<Climber> climber;
 
 	virtual void RobotInit();
 	virtual void DisabledInit();
@@ -31,5 +33,7 @@ public:
 	virtual void TeleopInit();
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
+private:
+	cs::UsbCamera camera;
 };
 #endif

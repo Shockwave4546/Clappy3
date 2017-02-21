@@ -21,7 +21,7 @@ class GearPCM : public Subsystem {
 private:
 
 	std::shared_ptr<Compressor> compressor;
-	std::shared_ptr<Solenoid> solenoid;
+	std::shared_ptr<DoubleSolenoid> solenoid;
 
 	inline bool SolenoidP();
 	inline bool CompressorP();
@@ -32,7 +32,7 @@ public:
 
 	void SetGearPCM(PCMStatus status);
 
-	bool GetPCMStatus();
+	frc::DoubleSolenoid::Value GetPCMStatus();
 
 	std::string GetPCMStatusS();
 

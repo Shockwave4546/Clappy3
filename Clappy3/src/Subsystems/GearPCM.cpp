@@ -1,12 +1,11 @@
 #include "GearPCM.h"
 #include "../RobotMap.h"
 
+
 GearPCM::GearPCM() : Subsystem("GearPCM") {
 
 	compressor = RobotMap::gearPCMCompressor;
 	solenoid = RobotMap::gearPCMSolenoid;
-
-	StartCompressor();
 
 }
 
@@ -17,25 +16,36 @@ void GearPCM::InitDefaultCommand() {
 void GearPCM::SetGearPCM(PCMStatus status)
 {
 	if (SolenoidP())
-		solenoid->Set(static_cast<bool>(status));
+	{
+		if (status == PCMStatus::OPENED)
+			solenoid->Set(frc::DoubleSolenoid::Value::kReverse);
+		else
+			solenoid->Set(frc::DoubleSolenoid::Value::kForward);
+	}
 }
 
-bool GearPCM::GetPCMStatus()
+frc::DoubleSolenoid::Value GearPCM::GetPCMStatus()
 {
 	if (SolenoidP())
 		return solenoid->Get();
 	else
-		return false;
+		return frc::DoubleSolenoid::Value::kOff;
+
 }
 
 std::string GearPCM::GetPCMStatusS()
 {
-	if (!SolenoidP())
-		return "null";
-	else if (solenoid->Get() == static_cast<bool>(PCMStatus::OPENED))
-		return "Opened";
+	if (SolenoidP())
+	{
+		if (solenoid->Get() == frc::DoubleSolenoid::Value::kForward)
+			return "Opened";
+		else if(solenoid->Get() == frc::DoubleSolenoid::Value::kReverse)
+			return "Closed";
+		else
+			return "Off";
+	}
 	else
-		return "Closed";
+		return "null";
 }
 
 void GearPCM::StartCompressor()

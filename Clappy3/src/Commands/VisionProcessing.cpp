@@ -4,17 +4,10 @@
 VisionProcessing::VisionProcessing() {
 	Requires(Robot::vision.get());
 
-	camera = CameraServer::GetInstance()->StartAutomaticCapture();
-
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
 	cvSink = CameraServer::GetInstance()->GetVideo();
-
-	camera.SetResolution(640, 480);
 	outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-
-	test = 0;
 }
 
 // Called just before this Command runs the first time
@@ -26,8 +19,10 @@ void VisionProcessing::Initialize() {
 void VisionProcessing::Execute() {
 
 	cvSink.GrabFrame(source);
+
 	cv::cvtColor(source, output, cv::COLOR_BGR2GRAY);
 	outputStreamStd.PutFrame(output);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

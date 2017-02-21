@@ -37,6 +37,9 @@ OI::OI() {
 	    button5.reset(new JoystickButton(gearStick.get(), 5));  //Ramp
 	    button5->WhenPressed(new ChangeGearArmPos(Position::DOWN));
 
+	    button6 = nullptr;
+	    button7 = nullptr;
+
 	    break;
 	}
 	case ControlConfig::XBOXCONTOLLER:

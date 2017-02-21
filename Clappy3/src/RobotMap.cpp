@@ -9,12 +9,14 @@ std::shared_ptr<SpeedController> RobotMap::driveTrainBottomRight;
 std::shared_ptr<SpeedController> RobotMap::driveTrainCenter;
 
 std::shared_ptr<Compressor> RobotMap::gearPCMCompressor;
-std::shared_ptr<Solenoid> RobotMap::gearPCMSolenoid;
+std::shared_ptr<DoubleSolenoid> RobotMap::gearPCMSolenoid;
 
 std::shared_ptr<SpeedController> RobotMap::gearArmMotor;
 std::shared_ptr<Encoder> RobotMap::gearArmEncoder;
 std::shared_ptr<DigitalInput> RobotMap::gearArmSwitch;
 std::shared_ptr<DoubleSolenoid> RobotMap::gearShootSolenoid;
+
+std::shared_ptr<SpeedController> RobotMap::climbMotor;
 
 void RobotMap::init() {
 
@@ -43,11 +45,15 @@ void RobotMap::init() {
 
 
     gearPCMCompressor.reset(new Compressor());
-    lw->AddActuator("GearPCM", "Compressor", gearPCMCompressor);
-    gearPCMCompressor->Start();
+    if (gearPCMCompressor != nullptr)
+    {
+    	lw->AddActuator("GearPCM", "Compressor", gearPCMCompressor);
+    	gearPCMCompressor->Start();
+    }
 
-    gearPCMSolenoid.reset(new Solenoid(0));
-    lw->AddActuator("GearPCM", "Solenoid", gearPCMSolenoid);
+    gearPCMSolenoid.reset(new DoubleSolenoid(0, 1));
+    if (gearPCMSolenoid != nullptr)
+    	lw->AddActuator("GearPCM", "Solenoid", gearPCMSolenoid);
 
 
 
@@ -55,14 +61,20 @@ void RobotMap::init() {
     lw->AddActuator("GearArm", "Motor", std::static_pointer_cast<TalonSRX>(gearArmMotor));
     gearArmMotor->StopMotor();
 
-    gearArmEncoder.reset(new Encoder(1, 0, true));
+    gearArmEncoder.reset(new Encoder(0, 1, true));
     lw->AddSensor("GearArm", "Encoder", gearArmEncoder);
 
     gearArmSwitch.reset(new DigitalInput(2));
     lw->AddSensor("GearArm", "HomeSwitch", gearArmSwitch);
 
-    gearShootSolenoid.reset(new DoubleSolenoid(1, 2));
-    lw->AddActuator("GearArm", "Solenoid", gearShootSolenoid);
+    gearShootSolenoid.reset(new DoubleSolenoid(2, 3));
+    if (gearShootSolenoid != nullptr)
+    	lw->AddActuator("GearArm", "Solenoid", gearShootSolenoid);
+
+
+    climbMotor.reset(new VictorSP(6));
+    lw->AddActuator("Climber", "ClimbMotor", std::static_pointer_cast<VictorSP>(climbMotor));
+    climbMotor->StopMotor();
 
 
 

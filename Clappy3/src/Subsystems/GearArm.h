@@ -31,6 +31,8 @@ private:
 	int m_targetPosition;
 	double m_targetPositionD;
 
+	inline bool SolenoidP();
+
 public:
 
 	GearArm();

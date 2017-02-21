@@ -27,10 +27,14 @@ GrabGearFromRamp::GrabGearFromRamp() {
 	if (Robot::gearArm->GetSolenoidValue() == frc::DoubleSolenoid::Value::kForward && Robot::gearArm->GetDegreesD() < 40)
 		AddSequential(new SetShoot(Direction::REVERSE));
 	AddSequential(new ChangeGearArmPos(Position::HOOK));
-	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	AddSequential(new SetShoot(Direction::FORWARD));
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	AddSequential(new ChangeGearArmPos(Position::RAMP));
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	AddSequential(new ToggleGearPCM(PCMStatus::CLOSED));
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	AddSequential(new ChangeGearArmPos(Position::HOOK));
+	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	AddSequential(new SetShoot(Direction::REVERSE));
 }

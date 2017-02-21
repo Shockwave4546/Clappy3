@@ -3,6 +3,7 @@
 #include "ToggleGearPCM.h"
 #include "SetShoot.h"
 #include "ChangeGearArmPos.h"
+#include "Drive.h"
 #include <thread>
 #include <chrono>
 
@@ -26,7 +27,9 @@ GrabGearFromGround::GrabGearFromGround() {
 	// arm.
 	AddSequential(new SetShoot(Direction::REVERSE));
 	AddSequential(new ChangeGearArmPos(Position::GROUND));
-	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	AddSequential(new Drive());
 	AddSequential(new ToggleGearPCM(PCMStatus::CLOSED));
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	AddSequential(new ChangeGearArmPos(Position::HOOK));
 }

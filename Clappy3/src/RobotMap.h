@@ -3,11 +3,6 @@
 
 #include "WPILib.h"
 
-enum class RobotError
-{
-	POINTER_IS_NULL = 5
-};
-
 class RobotMap {
 public:
 
@@ -18,12 +13,14 @@ public:
 	static std::shared_ptr<SpeedController> driveTrainCenter;
 
 	static std::shared_ptr<Compressor> gearPCMCompressor;
-	static std::shared_ptr<Solenoid> gearPCMSolenoid;
+	static std::shared_ptr<DoubleSolenoid> gearPCMSolenoid;
 
 	static std::shared_ptr<SpeedController> gearArmMotor;
 	static std::shared_ptr<Encoder> gearArmEncoder;
 	static std::shared_ptr<DigitalInput> gearArmSwitch;
 	static std::shared_ptr<DoubleSolenoid> gearShootSolenoid;
+
+	static std::shared_ptr<SpeedController> climbMotor;
 
 	static void init();
 };

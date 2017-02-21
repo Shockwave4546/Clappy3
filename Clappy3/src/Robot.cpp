@@ -5,14 +5,21 @@ std::shared_ptr<GearPCM> Robot::gearPCM;
 std::shared_ptr<GearArm> Robot::gearArm;
 std::shared_ptr<Vision> Robot::vision;
 std::unique_ptr<OI> Robot::oi;
+std::shared_ptr<Climber> Robot::climber;
 
 void Robot::RobotInit() {
 	RobotMap::init();
+
+	camera = CameraServer::GetInstance()->StartAutomaticCapture();
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	camera.SetResolution(640, 480);
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
     gearArm.reset(new GearArm());
     vision.reset(new Vision());
+    climber.reset(new Climber());
 	oi.reset(new OI());
 
 	autonomousCommand.reset(new AutonomousCommand());

@@ -20,7 +20,6 @@ private:
 	cv::Mat source;
 	cv::Mat output;
 	cs::CvSource outputStreamStd;
-	int test;
 };
 
 #endif  // VisionProcessing_H
