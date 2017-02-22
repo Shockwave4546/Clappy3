@@ -12,13 +12,13 @@ void Robot::RobotInit() {
 
 	camera = CameraServer::GetInstance()->StartAutomaticCapture();
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	camera.SetResolution(640, 480);
+	camera.SetResolution(1000, 500);
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
     gearArm.reset(new GearArm());
-    vision.reset(new Vision());
+    //vision.reset(new Vision());
     climber.reset(new Climber());
 	oi.reset(new OI());
 

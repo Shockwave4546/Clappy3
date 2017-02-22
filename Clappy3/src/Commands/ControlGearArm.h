@@ -19,7 +19,8 @@ public:
 	void Interrupted();
 private:
 	bool m_done;
-	double m_targetPosition;
+	//double m_targetPosition;
+	std::shared_ptr<XboxController> gearStick;
 };
 
 #endif

@@ -22,7 +22,7 @@ namespace Calculations
 	const double cameraHeight{ 0 };
 	const double tapeHeight{ 0 };
 	const double angleOffset{ 0 };
-	const double pMax{ 640 };
+	const double pMax{ 480 };
 	const double vFOV{ 33.6 }; 			//68.5 * sin(29.4)
 }
 

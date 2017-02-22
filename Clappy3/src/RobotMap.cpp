@@ -67,7 +67,7 @@ void RobotMap::init() {
     gearArmSwitch.reset(new DigitalInput(2));
     lw->AddSensor("GearArm", "HomeSwitch", gearArmSwitch);
 
-    gearShootSolenoid.reset(new DoubleSolenoid(2, 3));
+    gearShootSolenoid.reset(new DoubleSolenoid(3, 2));
     if (gearShootSolenoid != nullptr)
     	lw->AddActuator("GearArm", "Solenoid", gearShootSolenoid);
 

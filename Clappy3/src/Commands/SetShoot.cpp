@@ -1,4 +1,6 @@
 #include "SetShoot.h"
+#include <thread>
+#include <chrono>
 
 SetShoot::SetShoot(Direction direction) {
 	// Use Requires() here to declare subsystem dependencies
@@ -11,15 +13,31 @@ SetShoot::SetShoot(Direction direction) {
 // Called just before this Command runs the first time
 void SetShoot::Initialize() {
 
+	if (m_direction == Direction::FORWARD)
+	{
+		if (Robot::gearArm->GetSolenoidValue() == frc::DoubleSolenoid::Value::kForward)
+		{
+			Robot::gearArm->Reverse();
+			std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+		}
+	}
+	else
+		Robot::gearArm->Reverse();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetShoot::Execute() {
-	if (m_direction == Direction::FORWARD)
-		Robot::gearArm->Forward();
+
+	if (!Robot::gearArm->GetHomeSwitch())
+		Robot::gearArm->ControlGearArmMotor(0.5);
 	else
-		Robot::gearArm->Reverse();
-	m_done = true;
+	{
+		Robot::gearArm->StopGearArmMotor();
+		if (m_direction == Direction::FORWARD)
+			Robot::gearArm->Forward();
+		m_done = true;
+	}
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

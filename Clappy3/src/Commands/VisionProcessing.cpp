@@ -1,12 +1,14 @@
 #include "VisionProcessing.h"
 #include <thread>
 #include <chrono>
+#include <exception>
 VisionProcessing::VisionProcessing() {
 	Requires(Robot::vision.get());
 
 	cvSink = CameraServer::GetInstance()->GetVideo();
 	outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	m_failed = false;
 
 }
 
@@ -18,10 +20,21 @@ void VisionProcessing::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionProcessing::Execute() {
 
-	cvSink.GrabFrame(source);
+	if (!m_failed)
+	{
+		try
+		{
+			cvSink.GrabFrame(source);
+			cv::cvtColor(source, output, cv::COLOR_BGR2GRAY);
+			outputStreamStd.PutFrame(output);
+		}
+		catch (std::exception &e)
+		{
+			m_failed = true;
+		}
 
-	cv::cvtColor(source, output, cv::COLOR_BGR2GRAY);
-	outputStreamStd.PutFrame(output);
+	}
+	SmartDashboard::PutBoolean("camera failure", m_failed);
 
 }
 

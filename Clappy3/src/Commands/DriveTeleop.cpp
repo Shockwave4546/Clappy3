@@ -38,6 +38,7 @@ void DriveTeleop::Execute() {
 		m_X = driveStick->GetRawAxis(0);
 		m_Y = driveStick->GetRawAxis(1);
 		m_Z = 0.5 * -driveStick->GetRawAxis(2);
+		m_Z *= Calculations::TwistAxisScalar(m_Y, m_Z);
 	}
 	else
 	{
@@ -47,7 +48,7 @@ void DriveTeleop::Execute() {
 		m_Z = 0.5 * -driveStickX->GetX(XboxController::kRightHand);
 	}
 
-	m_Z *= Calculations::TwistAxisScalar(m_Y, m_Z);
+
 
 	if (Robot::driveTrain->GetDirection() == Direction::FORWARD)
 	{
@@ -55,7 +56,7 @@ void DriveTeleop::Execute() {
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, Calculations::DriveMotorSpeed(m_scalar, m_X, m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, -m_X/*Calculations::DriveMotorSpeed(m_scalar, m_X, m_sens)*/);
 
 	}
 	else
@@ -64,7 +65,7 @@ void DriveTeleop::Execute() {
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
 		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, Calculations::DriveMotorSpeed(m_scalar, -m_X, m_sens));
+		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, m_X/*Calculations::DriveMotorSpeed(m_scalar, -m_X, m_sens)*/);
 
 	}
 }

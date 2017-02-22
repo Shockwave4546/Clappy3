@@ -4,16 +4,7 @@ ControlClimbmotor::ControlClimbmotor() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::climber.get());
-	if (Robot::oi->getControlConfig() == ControlConfig::JDRIVE_XGEAR || Robot::oi->getControlConfig() == ControlConfig::XBOXCONTOLLER)
-	{
-		gearStickX = Robot::oi->getGearStickX();
-		gearStick = nullptr;
-	}
-	else
-	{
-		gearStick = Robot::oi->getGearStick();
-		gearStickX = nullptr;
-	}
+	gearStickX = Robot::oi->getGearStickX();
 }
 
 // Called just before this Command runs the first time
@@ -24,10 +15,7 @@ void ControlClimbmotor::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ControlClimbmotor::Execute() {
 
-	if (gearStickX != nullptr)
-		Robot::climber->SetMotorSpeed(gearStickX->GetY(Joystick::JoystickHand::kLeftHand));
-	else
-		Robot::climber->SetMotorSpeed(gearStick->GetY());
+	Robot::climber->SetMotorSpeed(-gearStickX->GetTriggerAxis(Joystick::JoystickHand::kLeftHand));
 
 }
 

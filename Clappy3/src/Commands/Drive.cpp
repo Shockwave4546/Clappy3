@@ -5,7 +5,7 @@ Drive::Drive() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::driveTrain.get());
-	SetTimeout(1);
+	SetTimeout(0.5);
 }
 
 // Called just before this Command runs the first time

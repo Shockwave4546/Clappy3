@@ -1,13 +1,11 @@
-#include "GrabGearFromGround.h"
-#include "../Robot.h"
-#include "ToggleGearPCM.h"
+#include "MoveToHook.h"
 #include "SetShoot.h"
 #include "ChangeGearArmPos.h"
+#include "../Robot.h"
 #include <thread>
 #include <chrono>
 
-#include "SetShoot.h"
-GrabGearFromGround::GrabGearFromGround() {
+MoveToHook::MoveToHook() {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -24,11 +22,10 @@ GrabGearFromGround::GrabGearFromGround() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddSequential(new SetShoot(Direction::REVERSE));
-	AddSequential(new ChangeGearArmPos(Position::GROUND));
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-	AddSequential(new ToggleGearPCM(PCMStatus::CLOSED));
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	if (Robot::gearArm->GetSolenoidValue() == frc::DoubleSolenoid::Value::kForward && Robot::gearArm->GetTargetPositionD() == Position::GROUND)
+	{
+		AddSequential(new SetShoot(Direction::REVERSE));
+		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	}
 	AddSequential(new ChangeGearArmPos(Position::HOOK));
 }

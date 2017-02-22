@@ -8,6 +8,9 @@
 #include "Commands/HomeGearArm.h"
 #include "Commands/GrabGearFromGround.h"
 #include "Commands/GrabGearFromRamp.h"
+#include "Commands/MoveToGround.h"
+#include "Commands/MoveToHook.h"
+#include "Commands/SetShoot.h"
 
 OI::OI() {
 
@@ -53,22 +56,20 @@ OI::OI() {
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
 
 	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
-	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::TOGGLE));
+	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::CLOSED));
 
 	    homeGearArmButton.reset(new JoystickButton(gearStickX.get(), 5)); //Lb
-	    homeGearArmButton->WhenPressed(new HomeGearArm());
+	    homeGearArmButton->WhenPressed(new ToggleGearPCM(PCMStatus::OPENED));
 
 	    button4.reset(new JoystickButton(gearStickX.get(), 1));	//Ground A
-	    button4->WhenPressed(new ChangeGearArmPos(Position::DOWN));
+	    button4->WhenPressed(new SetShoot(Direction::FORWARD));
 
-	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
-	    button5->WhenPressed(new ChangeGearArmPos(Position::UP));
+	    button5.reset(new JoystickButton(gearStickX.get(), 2));	//Hook B
+	    button5->WhenPressed(new SetShoot(Direction::REVERSE));
 
-	    button6.reset(new JoystickButton(gearStickX.get(), 3)); //X
-	    button6->WhenPressed(new GrabGearFromGround());
+	    button6 = nullptr;
 
-	    button7.reset(new JoystickButton(gearStickX.get(), 4)); //Y
-	    button7->WhenPressed(new GrabGearFromRamp());
+	    button7 = nullptr;
 
 	    break;
 	}
@@ -89,7 +90,10 @@ OI::OI() {
 	    homeGearArmButton->WhenPressed(new HomeGearArm());
 
 	    button4.reset(new JoystickButton(gearStickX.get(), 1));	//Ground A
-	    button4->WhenPressed(new ChangeGearArmPos(Position::DOWN));
+	    button4->WhenPressed(new MoveToGround());
+
+	    button5.reset(new JoystickButton(gearStickX.get(), 2));	//Hook B
+	    button5->WhenPressed(new MoveToHook());
 
 	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
 	    button5->WhenPressed(new ChangeGearArmPos(Position::UP));
