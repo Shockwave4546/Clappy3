@@ -12,6 +12,7 @@
 #include "OI.h"
 #include "Subsystems/Vision.h"
 #include "Subsystems/Climber.h"
+#include <networktables/NetworkTable.h>
 
 class Robot : public IterativeRobot {
 public:
@@ -34,6 +35,7 @@ public:
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
 private:
-	cs::UsbCamera camera;
+	cs::UsbCamera usbCamera;
+	cs::MjpegServer mjpegServer;
 };
 #endif

@@ -10,10 +10,9 @@ std::shared_ptr<Climber> Robot::climber;
 void Robot::RobotInit() {
 	RobotMap::init();
 
-	camera = CameraServer::GetInstance()->StartAutomaticCapture();
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	camera.SetResolution(1000, 500);
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	usbCamera = CameraServer::GetInstance()->StartAutomaticCapture();
+	frc::Wait(1);
+	usbCamera.SetResolution(640, 480);
 
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
@@ -50,6 +49,7 @@ void Robot::TeleopInit() {
 		autonomousCommand->Cancel();
 
 	driveTrain->SetDirection(Direction::FORWARD);
+
 
 }
 
