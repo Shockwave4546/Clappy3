@@ -9,14 +9,14 @@ std::shared_ptr<Climber> Robot::climber;
 void Robot::RobotInit() {
 	RobotMap::init();
 
-	cam0.reset(new cs::UsbCamera("GearCamera", 0));
-	cam0->SetResolution(640, 480);
-	CameraServer::GetInstance()->StartAutomaticCapture(*cam0.get());
+
+	gearCam = CameraServer::GetInstance()->StartAutomaticCapture(0);
+	gearCam.SetResolution(640, 480);
 	frc::Wait(1);
-	cam1.reset(new cs::UsbCamera("BackCamera", 1));
-	cam1->SetResolution(640, 480);
-	CameraServer::GetInstance()->StartAutomaticCapture(*cam1.get());
+	backCam = CameraServer::GetInstance()->StartAutomaticCapture(1);
+	backCam.SetResolution(640, 480);
 	frc::Wait(1);
+
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
     gearArm.reset(new GearArm());
