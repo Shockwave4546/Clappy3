@@ -3,26 +3,27 @@
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 std::shared_ptr<GearPCM> Robot::gearPCM;
 std::shared_ptr<GearArm> Robot::gearArm;
-std::shared_ptr<Vision> Robot::vision;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<Climber> Robot::climber;
 
 void Robot::RobotInit() {
 	RobotMap::init();
 
-	usbCamera = CameraServer::GetInstance()->StartAutomaticCapture();
+	cam0.reset(new cs::UsbCamera("GearCamera", 0));
+	cam0->SetResolution(640, 480);
+	CameraServer::GetInstance()->StartAutomaticCapture(*cam0.get());
 	frc::Wait(1);
-	usbCamera.SetResolution(640, 480);
-
+	cam1.reset(new cs::UsbCamera("BackCamera", 1));
+	cam1->SetResolution(640, 480);
+	CameraServer::GetInstance()->StartAutomaticCapture(*cam1.get());
+	frc::Wait(1);
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
     gearArm.reset(new GearArm());
-    //vision.reset(new Vision());
     climber.reset(new Climber());
 	oi.reset(new OI());
 
 	autonomousCommand.reset(new AutonomousCommand());
-
 
   }
 

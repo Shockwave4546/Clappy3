@@ -14,7 +14,7 @@
 
 OI::OI() {
 
-	m_controlConfig = ControlConfig::XBOXCONTOLLER;
+	m_controlConfig = ControlConfig::DISABLED;
 
 	switch (m_controlConfig)
 	{
@@ -105,6 +105,27 @@ OI::OI() {
 	    button7->WhenPressed(new GrabGearFromRamp());
 
 		break;
+	}
+	default:
+	{
+	    driveStickX = nullptr;
+	    gearStickX = nullptr;
+	    driveStick = nullptr;
+	    gearStick = nullptr;
+
+	    controlSwitchButton = nullptr;
+
+	    toggleGearPCMButton = nullptr;
+
+	    homeGearArmButton = nullptr;
+
+	    button4 = nullptr;
+
+	    button5 = nullptr;
+
+	    button6 = nullptr;
+
+	    button7 = nullptr;
 	}
 	}
 

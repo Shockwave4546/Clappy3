@@ -9,8 +9,8 @@
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/GearPCM.h"
 #include "Subsystems/GearArm.h"
+//#include "Subsystems/Vision.h"
 #include "OI.h"
-#include "Subsystems/Vision.h"
 #include "Subsystems/Climber.h"
 #include <networktables/NetworkTable.h>
 
@@ -23,8 +23,10 @@ public:
     static std::shared_ptr<DriveTrain> driveTrain;
     static std::shared_ptr<GearPCM> gearPCM;
     static std::shared_ptr<GearArm> gearArm;
-    static std::shared_ptr<Vision> vision;
+    //static std::shared_ptr<Vision> vision;
     static std::shared_ptr<Climber> climber;
+
+
 
 	virtual void RobotInit();
 	virtual void DisabledInit();
@@ -34,8 +36,12 @@ public:
 	virtual void TeleopInit();
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
+
+	void ChangeCamera();
+
 private:
-	cs::UsbCamera usbCamera;
-	cs::MjpegServer mjpegServer;
+    std::shared_ptr<cs::UsbCamera> cam0;
+    std::shared_ptr<cs::UsbCamera> cam1;
+    std::shared_ptr<cs::MjpegServer> mjpegServer;
 };
 #endif
