@@ -7,7 +7,6 @@ enum ControlConfig
 {
 	JOYSTICK,
 	XBOXCONTOLLER,
-	JDRIVE_XGEAR,
 	DISABLED
 };
 
@@ -18,16 +17,16 @@ private:
 	std::shared_ptr<Joystick> gearStick;
 	std::shared_ptr<JoystickButton> controlSwitchButton;
 	std::shared_ptr<JoystickButton> toggleGearPCMButton;
-	std::shared_ptr<JoystickButton> homeGearArmButton;
-	std::shared_ptr<JoystickButton> button4;
-	std::shared_ptr<JoystickButton> button5;
-	std::shared_ptr<JoystickButton> button6;
-	std::shared_ptr<JoystickButton> button7;
+	std::shared_ptr<JoystickButton> button4a;
+	std::shared_ptr<JoystickButton> button5b;
+	std::shared_ptr<JoystickButton> button6x;
+	std::shared_ptr<JoystickButton> button7y;
 
 	std::shared_ptr<XboxController> driveStickX;
 	std::shared_ptr<XboxController> gearStickX;
 
-	ControlConfig m_controlConfig;
+	ControlConfig m_driveConfig;
+	ControlConfig m_gearConfig;
 
 public:
 	OI();
@@ -38,7 +37,8 @@ public:
 	std::shared_ptr<XboxController> getDriveStickX();
 	std::shared_ptr<XboxController> getGearStickX();
 
-	int getControlConfig();
+	ControlConfig getDriveConfig();
+	ControlConfig getGearConfig();
 };
 
 #endif

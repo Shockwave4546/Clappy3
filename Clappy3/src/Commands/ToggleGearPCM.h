@@ -18,7 +18,7 @@ public:
 	void End();
 	void Interrupted();
 private:
-	bool m_done;
+	bool m_done{ false };
 	PCMStatus m_status;
 };
 

@@ -13,7 +13,7 @@
 class DriveTeleop: public Command {
 public:
 
-	DriveTeleop();
+	DriveTeleop(ControlConfig driveConfig);
 
 	virtual void Initialize();
 	virtual void Execute();
@@ -23,15 +23,11 @@ public:
 
 private:
 
-	double m_X;
-	double m_Y;
-	double m_Z;
-	double m_scalar;
-	double m_sens;
-	int m_controlConfig;
-
-	inline double Left();
-	inline double Right();
+	double m_X{ 0 };
+	double m_Y{ 0 };
+	double m_Z{ 0 };
+	double m_scalar{ 1 };
+	double m_sens{ 1 };
 
 	std::shared_ptr<Joystick> driveStick;
 	std::shared_ptr<XboxController> driveStickX;

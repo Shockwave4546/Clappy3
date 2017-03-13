@@ -14,118 +14,71 @@
 
 OI::OI() {
 
-	m_controlConfig = ControlConfig::DISABLED;
+	m_driveConfig = ControlConfig::DISABLED;
+	m_gearConfig = ControlConfig::DISABLED;
 
-	switch (m_controlConfig)
+	switch (m_driveConfig)
 	{
 	case ControlConfig::JOYSTICK:
 	{
 	    driveStick.reset(new Joystick(0));
-	    gearStick.reset(new Joystick(1));
 	    driveStickX = nullptr;
-	    gearStickX = nullptr;
 
 	    controlSwitchButton.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
-
-	    toggleGearPCMButton.reset(new JoystickButton(gearStick.get(), 1)); //Trigger
-	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::TOGGLE));
-
-	    homeGearArmButton.reset(new JoystickButton(gearStick.get(), 3));
-	    homeGearArmButton->WhenPressed(new HomeGearArm());
-
-	    button4.reset(new JoystickButton(gearStick.get(), 4));	//Ground
-	    button4->WhenPressed(new ChangeGearArmPos(Position::UP));
-
-	    button5.reset(new JoystickButton(gearStick.get(), 5));  //Ramp
-	    button5->WhenPressed(new ChangeGearArmPos(Position::DOWN));
-
-	    button6 = nullptr;
-	    button7 = nullptr;
 
 	    break;
 	}
 	case ControlConfig::XBOXCONTOLLER:
 	{
 	    driveStickX.reset(new XboxController(0));
-	    gearStickX.reset(new XboxController(1));
 	    driveStick = nullptr;
-	    gearStick = nullptr;
 
 	    controlSwitchButton.reset(new JoystickButton(driveStickX.get(), 6)); //Rb
 	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
 
+	    break;
+	}
+	case ControlConfig::DISABLED:
+	{
+		driveStick = nullptr;
+		driveStickX = nullptr;
+		controlSwitchButton = nullptr;
+		break;
+	}
+	}
+
+	switch (m_gearConfig)
+	{
+	case ControlConfig::XBOXCONTOLLER:
+	{
+		gearStickX.reset(new XboxController(1));
+		gearStick = nullptr;
+
 	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
 	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::CLOSED));
 
-	    homeGearArmButton.reset(new JoystickButton(gearStickX.get(), 5)); //Lb
-	    homeGearArmButton->WhenPressed(new ToggleGearPCM(PCMStatus::OPENED));
+	    button4a.reset(new JoystickButton(gearStickX.get(), 1));
+	    button4a->WhenPressed(new SetShoot(Direction::FORWARD));
 
-	    button4.reset(new JoystickButton(gearStickX.get(), 1));	//Ground A
-	    button4->WhenPressed(new SetShoot(Direction::FORWARD));
+	    button5b.reset(new JoystickButton(gearStickX.get(), 2));
+	    button5b->WhenPressed(new SetShoot(Direction::REVERSE));
 
-	    button5.reset(new JoystickButton(gearStickX.get(), 2));	//Hook B
-	    button5->WhenPressed(new SetShoot(Direction::REVERSE));
-
-	    button6 = nullptr;
-
-	    button7 = nullptr;
+	    button6x = nullptr;
+	    button7y = nullptr;
 
 	    break;
 	}
-	case ControlConfig::JDRIVE_XGEAR:
-	{
-		driveStick.reset(new Joystick(0));
-		gearStickX.reset(new XboxController(1));
-		driveStickX = nullptr;
-		gearStick = nullptr;
-
-	    controlSwitchButton.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
-	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
-
-	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
-	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::TOGGLE));
-
-	    homeGearArmButton.reset(new JoystickButton(gearStickX.get(), 5)); //Lb
-	    homeGearArmButton->WhenPressed(new HomeGearArm());
-
-	    button4.reset(new JoystickButton(gearStickX.get(), 1));	//Ground A
-	    button4->WhenPressed(new MoveToGround());
-
-	    button5.reset(new JoystickButton(gearStickX.get(), 2));	//Hook B
-	    button5->WhenPressed(new MoveToHook());
-
-	    button5.reset(new JoystickButton(gearStickX.get(), 2));  //Ramp B
-	    button5->WhenPressed(new ChangeGearArmPos(Position::UP));
-
-	    button6.reset(new JoystickButton(gearStickX.get(), 3)); //X
-	    button6->WhenPressed(new GrabGearFromGround());
-
-	    button7.reset(new JoystickButton(gearStickX.get(), 4)); //Y
-	    button7->WhenPressed(new GrabGearFromRamp());
-
-		break;
-	}
 	default:
 	{
-	    driveStickX = nullptr;
-	    gearStickX = nullptr;
-	    driveStick = nullptr;
-	    gearStick = nullptr;
-
-	    controlSwitchButton = nullptr;
-
+		gearStickX = nullptr;
+		gearStick = nullptr;
 	    toggleGearPCMButton = nullptr;
-
-	    homeGearArmButton = nullptr;
-
-	    button4 = nullptr;
-
-	    button5 = nullptr;
-
-	    button6 = nullptr;
-
-	    button7 = nullptr;
+	    button4a = nullptr;
+	    button5b = nullptr;
+	    button6x = nullptr;
+	    button7y = nullptr;
+	    break;
 	}
 	}
 
@@ -151,7 +104,12 @@ std::shared_ptr<XboxController> OI::getGearStickX()
 	return gearStickX;
 }
 
-int OI::getControlConfig()
+ControlConfig OI::getDriveConfig()
 {
-	return m_controlConfig;
+	return m_driveConfig;
+}
+
+ControlConfig OI::getGearConfig()
+{
+	return m_gearConfig;
 }

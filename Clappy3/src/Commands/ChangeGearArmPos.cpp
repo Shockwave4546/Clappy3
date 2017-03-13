@@ -4,7 +4,7 @@ ChangeGearArmPos::ChangeGearArmPos(Position position) {
 	Requires(Robot::gearArm.get());
 
 	m_position = position;
-	m_done = false;
+
 }
 
 void ChangeGearArmPos::Initialize() {

@@ -27,7 +27,12 @@ void GearArm::Zero()
 
 void GearArm::ControlGearArmMotor(double speed)
 {
-	gearArmMotor->Set(speed);
+	if (speed > 0 && GetHomeSwitch())
+		StopGearArmMotor();
+	else if (speed > 0)
+		gearArmMotor->Set(speed);
+	else
+		gearArmMotor->Set(speed * 0.5);
 }
 
 void GearArm::StopGearArmMotor()

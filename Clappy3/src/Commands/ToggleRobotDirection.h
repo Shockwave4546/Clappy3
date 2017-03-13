@@ -34,7 +34,7 @@ public:
 
 private:
 
-	bool m_done;
+	bool m_done{ false };
 
 };
 

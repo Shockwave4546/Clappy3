@@ -40,13 +40,16 @@ public:
 
 	void InitDefaultCommand();
 
-	void SetMotorSpeed(DriveMotor motor, double speed);
+	void ControlDriveTrain(double x, double y, double z, double sens=1);
 
 	void StopMoving();
 
 	void ChangeDirection();
 
 	void SetDirection(Direction direction);
+
+
+
 
 	int GetDirection();
 

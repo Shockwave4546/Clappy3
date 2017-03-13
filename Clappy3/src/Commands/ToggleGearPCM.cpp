@@ -5,7 +5,6 @@
 ToggleGearPCM::ToggleGearPCM(PCMStatus status)
 {
 	Requires(Robot::gearPCM.get());
-	m_done = false;
 	m_status = status;
 }
 

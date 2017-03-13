@@ -1,6 +1,7 @@
 #include "../Commands/DriveTeleop.h"
 #include "DriveTrain.h"
 #include "../RobotMap.h"
+#include "../Calculations.h"
 
 DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
 
@@ -16,29 +17,27 @@ DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
 
 void DriveTrain::InitDefaultCommand() {
 
-	SetDefaultCommand(new DriveTeleop());
+	SetDefaultCommand(new DriveTeleop(Robot::oi->getDriveConfig()));
 
 }
 
-void DriveTrain::SetMotorSpeed(DriveMotor motor, double speed)
+void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens)
 {
-	switch (motor)
+	if (m_direction == Direction::FORWARD)
 	{
-	case DriveMotor::TOP_LEFT:
-		topLeft->Set(speed);
-		break;
-	case DriveMotor::TOP_RIGHT:
-		topRight->Set(speed);
-		break;
-	case DriveMotor::BOTTOM_LEFT:
-		bottomLeft->Set(speed);
-		break;
-	case DriveMotor::BOTTOM_RIGHT:
-		bottomRight->Set(speed);
-		break;
-	case DriveMotor::CENTER:
-		center->Set(speed);
-		break;
+		topLeft->Set(calc::DriveMotorSpeed(calc::DriveMotorLeft(y, z), sens));
+		topRight->Set(calc::DriveMotorSpeed(calc::DriveMotorRight(y, z), sens));
+		bottomLeft->Set(calc::DriveMotorSpeed(calc::DriveMotorLeft(y, z), sens));
+		bottomRight->Set(calc::DriveMotorSpeed(calc::DriveMotorRight(y, z), sens));
+		center->Set(x);
+	}
+	else
+	{
+		topLeft->Set(calc::DriveMotorSpeed(-calc::DriveMotorRight(y, z), sens));
+		topRight->Set(calc::DriveMotorSpeed(-calc::DriveMotorLeft(y, z), sens));
+		bottomLeft->Set(calc::DriveMotorSpeed(-calc::DriveMotorRight(y, z), sens));
+		bottomRight->Set(calc::DriveMotorSpeed(-calc::DriveMotorLeft(y, z), sens));
+		center->Set(-x);
 	}
 }
 
@@ -63,6 +62,11 @@ void DriveTrain::SetDirection(Direction direction)
 {
 	m_direction = direction;
 }
+
+
+
+
+
 
 int DriveTrain::GetDirection()
 {

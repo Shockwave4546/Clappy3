@@ -14,7 +14,7 @@ public:
 	void Interrupted();
 private:
 	Position m_position;
-	bool m_done;
+	bool m_done{ false };
 };
 
 #endif  // ChangeGearArmPos_H

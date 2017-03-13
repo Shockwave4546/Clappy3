@@ -24,6 +24,7 @@ void RobotMap::init() {
 
     driveTrainTopLeft.reset(new VictorSP(0));
     lw->AddActuator("DriveTrain", "TopLeft", std::static_pointer_cast<VictorSP>(driveTrainTopLeft));
+    driveTrainTopLeft->SetInverted(true);
     driveTrainTopLeft->StopMotor();
 
     driveTrainTopRight.reset(new VictorSP(1));
@@ -32,6 +33,7 @@ void RobotMap::init() {
     
     driveTrainBottomLeft.reset(new VictorSP(2));
     lw->AddActuator("DriveTrain", "BottomLeft", std::static_pointer_cast<VictorSP>(driveTrainBottomLeft));
+    driveTrainBottomLeft->SetInverted(true);
     driveTrainBottomLeft->StopMotor();
     
     driveTrainBottomRight.reset(new VictorSP(3));
@@ -59,6 +61,7 @@ void RobotMap::init() {
 
     gearArmMotor.reset(new TalonSRX(5));
     lw->AddActuator("GearArm", "Motor", std::static_pointer_cast<TalonSRX>(gearArmMotor));
+    gearArmMotor->SetInverted(true);
     gearArmMotor->StopMotor();
 
     gearArmEncoder.reset(new Encoder(0, 1, true));

@@ -3,7 +3,6 @@
 ToggleRobotDirection::ToggleRobotDirection(): Command() {
 
 	Requires(Robot::driveTrain.get());
-	m_done = false;
 
 }
 

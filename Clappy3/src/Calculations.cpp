@@ -5,39 +5,25 @@
  *      Author: Garrick Craft
  */
 
-#include <cmath>
 #include "Calculations.h"
 
-namespace Calculations
+#include <cmath>
+
+namespace calc
 {
-	double HorizontalDistanceFromCameraGround(double ph)
+	double DriveMotorSpeed(double input, double sens)
 	{
-		return cameraHeight * std::tan(pi / 180 * (angleOffset - vFOV/2 + ((pMax - ph) * vFOV / pMax)));
-	}
-
-	double HorizontalDistanceFromCameraTape(double ph)
-	{
-		return (cameraHeight - tapeHeight) * std::tan(pi / 180 * (angleOffset - vFOV/2 + ((pMax - ph) * vFOV / pMax)));
-	}
-
-	double GearArmSpeed(double difference)
-	{
-		return std::abs(0.8 /(1 + std::exp(difference)) - 0.4);
-	}
-
-	double DriveMotorSpeed(double scalar, double input, double sens)
-	{
-		return (2 * scalar / (1 + std::exp(sens * input))) - scalar;
+		return (2 / (1 + std::exp(sens * input))) - 1;
 	}
 
 	double DriveMotorLeft(double y, double z)
 	{
-		return -(y + z);
+		return y - z;
 	}
 
 	double DriveMotorRight(double y, double z)
 	{
-		return y - z;
+		return y + z;
 	}
 
 	double TwistAxisScalar(double y, double z)

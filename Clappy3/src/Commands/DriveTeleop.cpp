@@ -1,27 +1,31 @@
 #include "DriveTeleop.h"
+
 #include "../Calculations.h"
 
-DriveTeleop::DriveTeleop(): Command() {
+DriveTeleop::DriveTeleop(ControlConfig driveConfig): Command() {
 
 	Requires(Robot::driveTrain.get());
 
-	m_controlConfig = Robot::oi->getControlConfig();
-
-	m_X = 0.0;
-	m_Y = 0.0;
-	m_Z = 0.0;
-	m_scalar = 1.0;
-	m_sens = 0.0;
-
-	if (m_controlConfig == ControlConfig::JOYSTICK || m_controlConfig == ControlConfig::JDRIVE_XGEAR)
+	switch (driveConfig)
+	{
+	case ControlConfig::JOYSTICK:
 	{
 		driveStick = Robot::oi->getDriveStick();
 		driveStickX = nullptr;
+		break;
 	}
-	else
+	case ControlConfig::XBOXCONTOLLER:
 	{
 		driveStickX = Robot::oi->getDriveStickX();
 		driveStick = nullptr;
+		break;
+	}
+	case ControlConfig::DISABLED:
+	{
+		driveStick = nullptr;
+		driveStickX = nullptr;
+		break;
+	}
 	}
 
 }
@@ -32,42 +36,25 @@ void DriveTeleop::Initialize() {
 
 void DriveTeleop::Execute() {
 
-	if (m_controlConfig == ControlConfig::JOYSTICK || m_controlConfig == ControlConfig::JDRIVE_XGEAR)
+	if (driveStick != nullptr)
 	{
 		m_sens = -0.5 * driveStick->GetRawAxis(3) + 0.5;
-		m_X = driveStick->GetRawAxis(0);
-		m_Y = driveStick->GetRawAxis(1);
+		m_X = -driveStick->GetRawAxis(0);
+		m_Y = -driveStick->GetRawAxis(1);
 		m_Z = 0.5 * -driveStick->GetRawAxis(2);
-		m_Z *= Calculations::TwistAxisScalar(m_Y, m_Z);
+		m_Z *= calc::TwistAxisScalar(m_Y, m_Z);
 	}
-	else
+
+	if (driveStickX != nullptr)
 	{
 		m_sens = 1;
-		m_X = driveStickX->GetX(XboxController::kLeftHand);
-		m_Y = driveStickX->GetY(XboxController::kLeftHand);
+		m_X = -driveStickX->GetX(XboxController::kLeftHand);
+		m_Y = -driveStickX->GetY(XboxController::kLeftHand);
 		m_Z = 0.5 * -driveStickX->GetX(XboxController::kRightHand);
 	}
 
+	Robot::driveTrain->ControlDriveTrain(m_X, m_Y, m_Z, m_sens);
 
-
-	if (Robot::driveTrain->GetDirection() == Direction::FORWARD)
-	{
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, -m_X/*Calculations::DriveMotorSpeed(m_scalar, m_X, m_sens)*/);
-
-	}
-	else
-	{
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::TOP_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_LEFT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorRight(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::BOTTOM_RIGHT, Calculations::DriveMotorSpeed(m_scalar, Calculations::DriveMotorLeft(m_Y, m_Z), m_sens));
-		Robot::driveTrain->SetMotorSpeed(DriveMotor::CENTER, m_X/*Calculations::DriveMotorSpeed(m_scalar, -m_X, m_sens)*/);
-
-	}
 }
 
 bool DriveTeleop::IsFinished() {
