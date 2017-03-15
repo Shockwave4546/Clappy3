@@ -21,22 +21,22 @@ void DriveTrain::InitDefaultCommand() {
 
 }
 
-void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens)
+void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens=1)
 {
 	if (m_direction == Direction::FORWARD)
 	{
-		topLeft->Set(calc::DriveMotorSpeed(calc::DriveMotorLeft(y, z), sens));
-		topRight->Set(calc::DriveMotorSpeed(calc::DriveMotorRight(y, z), sens));
-		bottomLeft->Set(calc::DriveMotorSpeed(calc::DriveMotorLeft(y, z), sens));
-		bottomRight->Set(calc::DriveMotorSpeed(calc::DriveMotorRight(y, z), sens));
+		topLeft->Set(calc::DriveSpeed(calc::DriveMotorLeft(y, z), sens));
+		topRight->Set(calc::DriveSpeed(calc::DriveMotorRight(y, z), sens));
+		bottomLeft->Set(calc::DriveSpeed(calc::DriveMotorLeft(y, z), sens));
+		bottomRight->Set(calc::DriveSpeed(calc::DriveMotorRight(y, z), sens));
 		center->Set(x);
 	}
 	else
 	{
-		topLeft->Set(calc::DriveMotorSpeed(-calc::DriveMotorRight(y, z), sens));
-		topRight->Set(calc::DriveMotorSpeed(-calc::DriveMotorLeft(y, z), sens));
-		bottomLeft->Set(calc::DriveMotorSpeed(-calc::DriveMotorRight(y, z), sens));
-		bottomRight->Set(calc::DriveMotorSpeed(-calc::DriveMotorLeft(y, z), sens));
+		topLeft->Set(calc::DriveSpeed(-calc::DriveMotorRight(y, z), sens));
+		topRight->Set(calc::DriveSpeed(-calc::DriveMotorLeft(y, z), sens));
+		bottomLeft->Set(calc::DriveSpeed(-calc::DriveMotorRight(y, z), sens));
+		bottomRight->Set(calc::DriveSpeed(-calc::DriveMotorLeft(y, z), sens));
 		center->Set(-x);
 	}
 }

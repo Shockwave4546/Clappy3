@@ -10,10 +10,12 @@
 
 namespace calc
 {
-	double DriveMotorSpeed(double input, double sens);
+	double DriveSpeed(double input, double sens);
 	double DriveMotorLeft(double y, double z);
 	double DriveMotorRight(double y, double z);
 	double TwistAxisScalar(double y, double z);
+	double AutoZValue(double offset, double distanceRatio, double weight);
+	double AutoYValue(double offset, double distanceRatio, double weight);
 }
 
 #endif /* CALCULATIONS_H_ */
