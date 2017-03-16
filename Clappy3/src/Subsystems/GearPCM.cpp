@@ -24,13 +24,12 @@ void GearPCM::SetGearPCM(PCMStatus status)
 	}
 }
 
-frc::DoubleSolenoid::Value GearPCM::GetPCMStatus()
+PCMStatus GearPCM::GetPCMStatus()
 {
-	if (SolenoidP())
-		return solenoid->Get();
+	if (solenoid->Get() == frc::DoubleSolenoid::Value::kForward)
+		return PCMStatus::CLOSED;
 	else
-		return frc::DoubleSolenoid::Value::kOff;
-
+		return PCMStatus::OPENED;
 }
 
 std::string GearPCM::GetPCMStatusS()

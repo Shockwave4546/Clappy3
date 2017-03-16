@@ -1,48 +1,39 @@
-#include "ControlGearArm.h"
+#include "../Commands/ControlGearArm.h"
 
 #include "../Calculations.h"
 
 ControlGearArm::ControlGearArm() {
-
 	Requires(Robot::gearArm.get());
-	//m_targetPosition = 0;
 	gearStick = Robot::oi->getGearStickX();
-
 }
 
+ControlGearArm::ControlGearArm(double speed, double timeout)
+{
+	Requires(Robot::gearArm.get());
+	gearStick = nullptr;
+	m_speed = speed;
+	m_timeout = timeout;
+}
 void ControlGearArm::Initialize() {
-
+	if (m_timeout > 0)
+		SetTimeout(m_timeout);
 }
 
 void ControlGearArm::Execute() {
 
-	Robot::gearArm->ControlGearArmMotor(-gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand));
+	if (gearStick != nullptr)
+		Robot::gearArm->ControlGearArmMotor(-gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand));
+	else
+		Robot::gearArm->ControlGearArmMotor(m_speed);
 
-
-
-	/*
-		(gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand) < 0) ? ((!Robot::gearArm->GetHomeSwitch()) ? Robot::gearArm->ControlGearArmMotor(-gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand)) : Robot::gearArm->StopGearArmMotor()) : Robot::gearArm->ControlGearArmMotor(-0.5
-				* gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand));
-
-		m_targetPosition = Robot::gearArm->GetTargetPositionD();
-
-		if (Robot::gearArm->GetDegreesD() < m_targetPosition)
-		{
-			Robot::gearArm->ControlGearArmMotor(-Calculations::GearArmSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
-		}
-		if (Robot::gearArm->GetDegreesD() > m_targetPosition)
-		{
-			Robot::gearArm->ControlGearArmMotor(Calculations::GearArmSpeed(Robot::gearArm->GetDegreesD() - m_targetPosition));
-		}
-		*/
 }
 
 bool ControlGearArm::IsFinished() {
-	return false;
+	return IsTimedOut();
 }
 
 void ControlGearArm::End() {
-
+	Robot::gearArm->StopGearArmMotor();
 }
 
 void ControlGearArm::Interrupted() {

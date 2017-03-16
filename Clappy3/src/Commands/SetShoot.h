@@ -14,7 +14,7 @@ public:
 	void Interrupted();
 private:
 	Direction m_direction;
-	bool m_done;
+	bool m_done{ false };
 };
 
 #endif  // SetShoot_H

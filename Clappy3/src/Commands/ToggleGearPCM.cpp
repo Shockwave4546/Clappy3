@@ -16,7 +16,7 @@ void ToggleGearPCM::Execute() {
 
 	if (m_status == PCMStatus::TOGGLE)
 	{
-		if (Robot::gearPCM->GetPCMStatus() == DoubleSolenoid::Value::kReverse)
+		if (Robot::gearPCM->GetPCMStatus() == PCMStatus::OPENED)
 			Robot::gearPCM->SetGearPCM(PCMStatus::CLOSED);
 		else
 			Robot::gearPCM->SetGearPCM(PCMStatus::OPENED);

@@ -14,8 +14,9 @@ namespace calc
 	double DriveMotorLeft(double y, double z);
 	double DriveMotorRight(double y, double z);
 	double TwistAxisScalar(double y, double z);
-	double AutoZValue(double offset, double distanceRatio, double weight);
-	double AutoYValue(double offset, double distanceRatio, double weight);
+	double AutoZValue(double offset, double distanceWeight, double functionWeight);
+	double AutoYValue(double offset, double distanceWeight, double functionWeight);
+	double DistanceWeight(double distance, double minimum);
 }
 
 #endif /* CALCULATIONS_H_ */

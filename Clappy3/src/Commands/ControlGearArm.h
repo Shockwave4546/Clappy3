@@ -12,15 +12,16 @@
 class ControlGearArm : public Command {
 public:
 	ControlGearArm();
+	ControlGearArm(double speed, double timeout);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 private:
-	//bool m_done;
-	//double m_targetPosition;
 	std::shared_ptr<XboxController> gearStick;
+	double m_speed{ 0 };
+	double m_timeout{ -1 };
 };
 
 #endif

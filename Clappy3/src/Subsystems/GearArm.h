@@ -7,13 +7,11 @@
 
 enum Position
 {
-	MIN,
 	GROUND,
-	RAMP,
-	HOOK,
-	MAX,
-	UP,
-	DOWN
+	SHOOT,
+	SWITCH,
+	NOT_INITIALIZED,
+	MOVING
 };
 
 /**
@@ -28,9 +26,7 @@ private:
 	std::shared_ptr<Encoder> encoder;
 	std::shared_ptr<DigitalInput> homeSwitch;
 	std::shared_ptr<DoubleSolenoid> solenoid;
-	int m_targetPosition;
-	double m_targetPositionD;
-
+	Position m_idealPosition;
 	inline bool SolenoidP();
 
 public:
@@ -39,25 +35,17 @@ public:
 
 	void InitDefaultCommand();
 
-	void Zero();
-	void Home();
-
 	void ControlGearArmMotor(double speed);
+	void SetIdealPosition(Position position);
 	void StopGearArmMotor();
-	void MoveToTargetPosition();
-	void SetTargetPosition(Position position);
 
-	void Forward();
-	void Reverse();
-	DoubleSolenoid::Value GetSolenoidValue();
 
-	void CycleUp();
-	void CycleDown();
+	void OpenShoot();
+	void CloseShoot();
+	bool ShootOpened();
 
 	bool GetHomeSwitch();
-	std::string GetTargetPositionS();
-	double GetDegreesD();
-	double GetTargetPositionD();
+	Position GetIdealPosition();
 
 };
 

@@ -31,14 +31,19 @@ namespace calc
 		return std::abs((2 / (1 + std::exp((y==0) ? z/0.01 : z/y)) - 1));
 	}
 
-	double AutoZValue(double offset, double distanceRatio, double weight)
+	double AutoZValue(double offset, double distanceWeight, double functionWeight)
 	{
-		return (2 * weight * distanceRatio / (1 + std::exp(-5 * offset))) - weight * distanceRatio;
+		return (2 * functionWeight * distanceWeight / (1 + std::exp(-5 * offset))) - functionWeight * distanceWeight;
 	}
 
-	double AutoYValue(double offset, double distanceRatio, double weight)
+	double AutoYValue(double offset, double distanceWeight, double functionWeight)
 	{
-		return (offset < 1) ? weight * distanceRatio * std::pow(offset + 1, 2) : weight * distanceRatio * std::pow(offset - 1, 2);
+		return (offset < 1) ? functionWeight * distanceWeight * std::pow(offset + 1, 2) : functionWeight * distanceWeight * std::pow(offset - 1, 2);
+	}
+
+	double DistanceWeight(double distance, double minimum)
+	{
+		return 2 / (1 + std::exp(3 - 3 * distance/(minimum == 0) ? 1 : minimum)) - 1;
 	}
 }
 

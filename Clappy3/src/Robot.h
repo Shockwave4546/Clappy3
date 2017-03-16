@@ -5,13 +5,14 @@
 #include "Commands/Command.h"
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
-#include "Commands/AutonomousCommand.h"
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/GearPCM.h"
 #include "Subsystems/GearArm.h"
 #include "OI.h"
 #include "Subsystems/Climber.h"
 #include <networktables/NetworkTable.h>
+
+#include "Commands/AutonomousCommand.h"
 
 class Robot : public IterativeRobot {
 public:

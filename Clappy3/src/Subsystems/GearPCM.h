@@ -32,7 +32,7 @@ public:
 
 	void SetGearPCM(PCMStatus status);
 
-	frc::DoubleSolenoid::Value GetPCMStatus();
+	PCMStatus GetPCMStatus();
 
 	std::string GetPCMStatusS();
 

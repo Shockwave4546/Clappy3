@@ -61,7 +61,6 @@ void RobotMap::init() {
 
     gearArmMotor.reset(new TalonSRX(5));
     lw->AddActuator("GearArm", "Motor", std::static_pointer_cast<TalonSRX>(gearArmMotor));
-    gearArmMotor->SetInverted(true);
     gearArmMotor->StopMotor();
 
     gearArmEncoder.reset(new Encoder(0, 1, true));

@@ -1,16 +1,15 @@
 #include "OI.h"
 #include "SmartDashboard/SmartDashboard.h"
+
 #include "Commands/AutonomousCommand.h"
 #include "Commands/DriveTeleop.h"
-#include "Commands/ToggleGearPCM.h"
-#include "Commands/ToggleRobotDirection.h"
-#include "Commands/ChangeGearArmPos.h"
-#include "Commands/HomeGearArm.h"
-#include "Commands/GrabGearFromGround.h"
-#include "Commands/GrabGearFromRamp.h"
 #include "Commands/MoveToGround.h"
 #include "Commands/MoveToHook.h"
-#include "Commands/SetShoot.h"
+#include "Commands/AutoGrabGearFromGround.h"
+#include "Commands/AutoGrabGearFromShoot.h"
+#include "Commands/AutoPlaceGear.h"
+#include "Commands/ToggleGearPCM.h"
+#include "Commands/ToggleRobotDirection.h"
 
 OI::OI() {
 
@@ -24,8 +23,8 @@ OI::OI() {
 	    driveStick.reset(new Joystick(0));
 	    driveStickX = nullptr;
 
-	    controlSwitchButton.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
-	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
+	    triggerRb.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
+	    triggerRb->WhenPressed(new ToggleRobotDirection());
 
 	    break;
 	}
@@ -34,8 +33,8 @@ OI::OI() {
 	    driveStickX.reset(new XboxController(0));
 	    driveStick = nullptr;
 
-	    controlSwitchButton.reset(new JoystickButton(driveStickX.get(), 6)); //Rb
-	    controlSwitchButton->WhenPressed(new ToggleRobotDirection());
+	    triggerRb.reset(new JoystickButton(driveStickX.get(), 6)); //Rb
+	    triggerRb->WhenPressed(new ToggleRobotDirection());
 
 	    break;
 	}
@@ -43,7 +42,7 @@ OI::OI() {
 	{
 		driveStick = nullptr;
 		driveStickX = nullptr;
-		controlSwitchButton = nullptr;
+		triggerRb = nullptr;
 		break;
 	}
 	}
@@ -55,16 +54,21 @@ OI::OI() {
 		gearStickX.reset(new XboxController(1));
 		gearStick = nullptr;
 
-	    toggleGearPCMButton.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
-	    toggleGearPCMButton->WhenPressed(new ToggleGearPCM(PCMStatus::CLOSED));
+	    triggerRb.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
+	    triggerRb->WhenPressed(new ToggleGearPCM(PCMStatus::CLOSED));
+
+	    triggerLb.reset(new JoystickButton(gearStickX.get(), 7));
+	    triggerLb->WhenPressed(new ToggleGearPCM(PCMStatus::OPENED));
 
 	    button4a.reset(new JoystickButton(gearStickX.get(), 1));
-	    button4a->WhenPressed(new SetShoot(Direction::FORWARD));
+	    button4a->WhenPressed(new AutoPlaceGear());
 
 	    button5b.reset(new JoystickButton(gearStickX.get(), 2));
-	    button5b->WhenPressed(new SetShoot(Direction::REVERSE));
+	    button5b->WhenPressed(new AutoGrabGearFromGround());
 
-	    button6x = nullptr;
+	    button6x.reset(new JoystickButton(gearStickX.get(), 3));
+	    button6x->WhenPressed(new AutoGrabGearFromShoot());
+
 	    button7y = nullptr;
 
 	    break;
@@ -73,7 +77,7 @@ OI::OI() {
 	{
 		gearStickX = nullptr;
 		gearStick = nullptr;
-	    toggleGearPCMButton = nullptr;
+	    triggerLb = nullptr;
 	    button4a = nullptr;
 	    button5b = nullptr;
 	    button6x = nullptr;

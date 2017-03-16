@@ -1,6 +1,7 @@
 #include "Climber.h"
+
+#include "../Commands/ControlClimbmotor.h"
 #include "../RobotMap.h"
-#include "../Commands/ControlClimbMotor.h"
 
 Climber::Climber() : Subsystem("Climber") {
 

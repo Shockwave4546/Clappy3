@@ -1,6 +1,7 @@
 #include "GearArm.h"
-#include "../RobotMap.h"
+
 #include "../Commands/ControlGearArm.h"
+#include "../RobotMap.h"
 
 GearArm::GearArm() : Subsystem("GearArm") {
 
@@ -9,20 +10,15 @@ GearArm::GearArm() : Subsystem("GearArm") {
 	homeSwitch = RobotMap::gearArmSwitch;
 	solenoid = RobotMap::gearShootSolenoid;
 
-	encoder->SetDistancePerPulse(360.0/497);
+	m_idealPosition = Position::NOT_INITIALIZED;
 
-	m_targetPosition = Position::HOOK;
-	m_targetPositionD = 0;
+	//encoder->SetDistancePerPulse(360.0/497);
+
 }
 
 void GearArm::InitDefaultCommand() {
 
 	SetDefaultCommand(new ControlGearArm());
-}
-
-void GearArm::Zero()
-{
-	encoder->Reset();
 }
 
 void GearArm::ControlGearArmMotor(double speed)
@@ -40,58 +36,37 @@ void GearArm::StopGearArmMotor()
 	gearArmMotor->StopMotor();
 }
 
-void GearArm::SetTargetPosition(Position position)
+void GearArm::SetIdealPosition(Position position)
 {
-	switch (position)
+	m_idealPosition = position;
+}
+
+
+
+void GearArm::OpenShoot()
+{
+	if (SolenoidP() && !ShootOpened())
 	{
-	case Position::UP:
-		CycleUp();
-		break;
-	case Position::DOWN:
-		CycleDown();
-		break;
-	case Position::HOOK:
-		m_targetPosition = Position::HOOK;
-		break;
-	case Position::RAMP:
-		m_targetPosition = Position::RAMP;
-		break;
-	default:
-		m_targetPosition = Position::GROUND;
-		break;
+		solenoid->Set(frc::DoubleSolenoid::Value::kForward);
+		frc::Wait(1);
 	}
 }
 
-void GearArm::Forward()
+void GearArm::CloseShoot()
 {
-	if (SolenoidP())
-		solenoid->Set(frc::DoubleSolenoid::Value::kForward);
-}
-
-void GearArm::Reverse()
-{
-	if (SolenoidP())
+	if (SolenoidP() && ShootOpened())
+	{
 		solenoid->Set(frc::DoubleSolenoid::Value::kReverse);
+		frc::Wait(2.5);
+	}
 }
 
-frc::DoubleSolenoid::Value GearArm::GetSolenoidValue()
-{
-	if (SolenoidP())
-		return solenoid->Get();
-	else
-		return frc::DoubleSolenoid::Value::kOff;
-}
 
-void GearArm::CycleUp()
-{
-	if (m_targetPosition + 1 < Position::MAX)
-		m_targetPosition += 1;
-}
 
-void GearArm::CycleDown()
+
+bool GearArm::ShootOpened()
 {
-	if (m_targetPosition - 1 > Position::MIN)
-		m_targetPosition -= 1;
+	return SolenoidP() && solenoid->Get() == frc::DoubleSolenoid::Value::kForward;
 }
 
 bool GearArm::GetHomeSwitch()
@@ -99,35 +74,9 @@ bool GearArm::GetHomeSwitch()
 	return homeSwitch->Get();
 }
 
-std::string GearArm::GetTargetPositionS()
+Position GearArm::GetIdealPosition()
 {
-	switch (m_targetPosition)
-	{
-	case Position::GROUND:
-		return "Ground";
-	case Position::RAMP:
-		return "Ramp";
-	default:
-		return "Hook";
-	}
-}
-
-double GearArm::GetTargetPositionD()
-{
-	switch (m_targetPosition)
-	{
-	case Position::GROUND:
-		return 80;
-	case Position::RAMP:
-		return 40;
-	default:
-		return 0;
-	}
-}
-
-double GearArm::GetDegreesD()
-{
-	return encoder->GetDistance();
+	return m_idealPosition;
 }
 
 inline bool GearArm::SolenoidP()

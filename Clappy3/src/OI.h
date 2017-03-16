@@ -15,8 +15,8 @@ private:
 
 	std::shared_ptr<Joystick> driveStick;
 	std::shared_ptr<Joystick> gearStick;
-	std::shared_ptr<JoystickButton> controlSwitchButton;
-	std::shared_ptr<JoystickButton> toggleGearPCMButton;
+	std::shared_ptr<JoystickButton> triggerRb;
+	std::shared_ptr<JoystickButton> triggerLb;
 	std::shared_ptr<JoystickButton> button4a;
 	std::shared_ptr<JoystickButton> button5b;
 	std::shared_ptr<JoystickButton> button6x;

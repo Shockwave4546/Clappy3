@@ -40,7 +40,7 @@ public:
 
 	void InitDefaultCommand();
 
-	void ControlDriveTrain(double x, double y, double z, double sens=1);
+	void ControlDriveTrain(double x, double y, double z, double sens);
 
 	void StopMoving();
 

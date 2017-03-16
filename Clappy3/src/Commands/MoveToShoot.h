@@ -1,12 +1,12 @@
-#ifndef MoveToHook_H
-#define MoveToHook_H
+#ifndef MoveToShoot_H
+#define MoveToShoot_H
 
 #include "Commands/Subsystem.h"
 #include "../Robot.h"
 
-class MoveToHook : public Command {
+class MoveToShoot : public Command {
 public:
-	MoveToHook();
+	MoveToShoot();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -14,4 +14,4 @@ public:
 	void Interrupted();
 };
 
-#endif  // MoveToHook_H
+#endif  // MoveToShoot_H

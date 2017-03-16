@@ -1,4 +1,5 @@
-#include "ControlClimbmotor.h"
+#include "../Commands/ControlClimbmotor.h"
+
 #include "../Robot.h"
 ControlClimbmotor::ControlClimbmotor() {
 	// Use Requires() here to declare subsystem dependencies

@@ -1,7 +1,7 @@
-#include "../Commands/DriveTeleop.h"
 #include "DriveTrain.h"
 #include "../RobotMap.h"
 #include "../Calculations.h"
+#include "../Commands/DriveTeleop.h"
 
 DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
 
@@ -21,7 +21,7 @@ void DriveTrain::InitDefaultCommand() {
 
 }
 
-void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens=1)
+void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens)
 {
 	if (m_direction == Direction::FORWARD)
 	{
