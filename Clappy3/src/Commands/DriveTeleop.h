@@ -13,7 +13,7 @@
 class DriveTeleop: public Command {
 public:
 
-	DriveTeleop(ControlConfig driveConfig);
+	DriveTeleop();
 
 	virtual void Initialize();
 	virtual void Execute();

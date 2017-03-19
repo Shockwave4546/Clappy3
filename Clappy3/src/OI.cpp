@@ -24,8 +24,8 @@ OI::OI() {
 	    driveStick.reset(new Joystick(0));
 	    driveStickX = nullptr;
 
-	    triggerRb.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
-	    triggerRb->WhenPressed(new ToggleRobotDirection());
+	    drivetriggerRb.reset(new JoystickButton(driveStick.get(), 1)); //Trigger
+	    drivetriggerRb->WhenPressed(new ToggleRobotDirection());
 
 	    break;
 	}
@@ -34,8 +34,8 @@ OI::OI() {
 	    driveStickX.reset(new XboxController(0));
 	    driveStick = nullptr;
 
-	    triggerRb.reset(new JoystickButton(driveStickX.get(), 6)); //Rb
-	    triggerRb->WhenPressed(new ToggleRobotDirection());
+	    drivetriggerRb.reset(new JoystickButton(driveStickX.get(), 6)); //Rb
+	    drivetriggerRb->WhenPressed(new ToggleRobotDirection());
 
 	    break;
 	}
@@ -43,7 +43,7 @@ OI::OI() {
 	{
 		driveStick = nullptr;
 		driveStickX = nullptr;
-		triggerRb = nullptr;
+		drivetriggerRb = nullptr;
 		break;
 	}
 	}

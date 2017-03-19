@@ -17,7 +17,8 @@ DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
 
 void DriveTrain::InitDefaultCommand() {
 
-	SetDefaultCommand(new DriveTeleop(Robot::oi->getDriveConfig()));
+	SetDefaultCommand(new DriveTeleop());
+	m_direction = Direction::FORWARD;
 
 }
 
@@ -39,6 +40,13 @@ void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens)
 		bottomRight->Set(calc::DriveSpeed(-calc::DriveMotorLeft(y, z), sens));
 		center->Set(-x);
 	}
+
+	SmartDashboard::PutNumber("topLeft", topLeft->Get());
+	SmartDashboard::PutNumber("topRight", topRight->Get());
+	SmartDashboard::PutNumber("bottomLeft", bottomLeft->Get());
+	SmartDashboard::PutNumber("bottomRight", bottomRight->Get());
+	SmartDashboard::PutNumber("center", center->Get());
+
 }
 
 void DriveTrain::StopMoving()

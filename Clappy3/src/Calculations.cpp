@@ -13,7 +13,7 @@ namespace calc
 {
 	double DriveSpeed(double input, double sens)
 	{
-		return (2 / (1 + std::exp(sens * input))) - 1;
+		return (2 / (1 + std::exp(-sens * input))) - 1;
 	}
 
 	double DriveMotorLeft(double y, double z)

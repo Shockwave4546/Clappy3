@@ -12,10 +12,6 @@ GearArm::GearArm() : Subsystem("GearArm") {
 
 	m_idealPosition = Position::NOT_INITIALIZED;
 
-	CloseShoot();
-
-	//encoder->SetDistancePerPulse(360.0/497);
-
 }
 
 void GearArm::InitDefaultCommand() {
