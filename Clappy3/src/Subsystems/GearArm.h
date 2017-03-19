@@ -40,9 +40,11 @@ public:
 	void StopGearArmMotor();
 
 
+
 	void OpenShoot();
 	void CloseShoot();
 	bool ShootOpened();
+	void Rumble();
 
 	bool GetHomeSwitch();
 	Position GetIdealPosition();

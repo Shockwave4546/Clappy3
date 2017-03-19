@@ -10,11 +10,12 @@
 #include "Commands/AutoPlaceGear.h"
 #include "Commands/ToggleGearPCM.h"
 #include "Commands/ToggleRobotDirection.h"
+#include "Commands/SetShoot.h"
 
 OI::OI() {
 
-	m_driveConfig = ControlConfig::DISABLED;
-	m_gearConfig = ControlConfig::DISABLED;
+	m_driveConfig = ControlConfig::XBOXCONTOLLER;
+	m_gearConfig = ControlConfig::XBOXCONTOLLER;
 
 	switch (m_driveConfig)
 	{
@@ -64,10 +65,10 @@ OI::OI() {
 	    button4a->WhenPressed(new AutoPlaceGear());
 
 	    button5b.reset(new JoystickButton(gearStickX.get(), 2));
-	    button5b->WhenPressed(new AutoGrabGearFromGround());
+	    button5b->WhenPressed(new SetShoot(Direction::REVERSE)/*AutoGrabGearFromGround()*/);
 
 	    button6x.reset(new JoystickButton(gearStickX.get(), 3));
-	    button6x->WhenPressed(new AutoGrabGearFromShoot());
+	    button6x->WhenPressed(new SetShoot(Direction::FORWARD)/*AutoGrabGearFromShoot()*/);
 
 	    button7y = nullptr;
 

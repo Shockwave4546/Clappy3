@@ -25,6 +25,16 @@ void ControlGearArm::Execute() {
 		Robot::gearArm->ControlGearArmMotor(-gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand));
 	else
 		Robot::gearArm->ControlGearArmMotor(m_speed);
+	if (Robot::gearArm->GetHomeSwitch())
+	{
+		gearStick->SetRumble(XboxController::RumbleType::kLeftRumble, 0.5);
+		gearStick->SetRumble(XboxController::RumbleType::kRightRumble, 0.5);
+	}
+	else
+	{
+		gearStick->SetRumble(XboxController::RumbleType::kLeftRumble, 0);
+		gearStick->SetRumble(XboxController::RumbleType::kRightRumble, 0);
+	}
 
 }
 

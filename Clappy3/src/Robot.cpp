@@ -10,12 +10,12 @@ void Robot::RobotInit() {
 	RobotMap::init();
 
 
-	gearCam = CameraServer::GetInstance()->StartAutomaticCapture(0);
+	gearCam = CameraServer::GetInstance()->StartAutomaticCapture();
 	gearCam.SetResolution(640, 480);
 	frc::Wait(1);
-	backCam = CameraServer::GetInstance()->StartAutomaticCapture(1);
-	backCam.SetResolution(640, 480);
-	frc::Wait(1);
+	//backCam = CameraServer::GetInstance()->StartAutomaticCapture(1);
+	//backCam.SetResolution(640, 480);
+	//frc::Wait(1);
 
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
@@ -60,6 +60,9 @@ void Robot::TeleopPeriodic() {
 
 	SmartDashboard::PutString("Robot Direction", driveTrain->GetDirectionS());
 	SmartDashboard::PutString("GearPCM Status", gearPCM->GetPCMStatusS());
+	SmartDashboard::PutBoolean("Tracking", true);
+	SmartDashboard::PutString("Target", "hook");
+
 
 }
 

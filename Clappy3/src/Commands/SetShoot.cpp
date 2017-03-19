@@ -12,8 +12,7 @@ void SetShoot::Initialize() {
 
 	if (m_direction == Direction::FORWARD)
 	{
-		if (Robot::gearArm->ShootOpened())
-			Robot::gearArm->OpenShoot();
+		Robot::gearArm->OpenShoot();
 	}
 	else
 		Robot::gearArm->CloseShoot();
@@ -21,15 +20,7 @@ void SetShoot::Initialize() {
 
 void SetShoot::Execute() {
 
-	if (!Robot::gearArm->GetHomeSwitch())
-		Robot::gearArm->ControlGearArmMotor(0.5);
-	else
-	{
-		Robot::gearArm->StopGearArmMotor();
-		if (m_direction == Direction::FORWARD)
-			Robot::gearArm->OpenShoot();
-		m_done = true;
-	}
+	m_done = true;
 
 }
 
