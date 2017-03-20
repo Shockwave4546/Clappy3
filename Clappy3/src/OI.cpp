@@ -15,7 +15,7 @@
 OI::OI() {
 
 	m_driveConfig = ControlConfig::XBOXCONTOLLER;
-	m_gearConfig = ControlConfig::XBOXCONTOLLER;
+	m_gearConfig = ControlConfig::DISABLED;
 
 	switch (m_driveConfig)
 	{
@@ -117,4 +117,28 @@ ControlConfig OI::getDriveConfig()
 ControlConfig OI::getGearConfig()
 {
 	return m_gearConfig;
+}
+
+void OI::RumbleDriveGamepad(double value)
+{
+	driveStickX->SetRumble(XboxController::RumbleType::kLeftRumble, value);
+	driveStickX->SetRumble(XboxController::RumbleType::kRightRumble, value);
+}
+
+void OI::RumbleGearGamepad(double value)
+{
+	gearStickX->SetRumble(XboxController::RumbleType::kLeftRumble, value);
+	gearStickX->SetRumble(XboxController::RumbleType::kRightRumble, value);
+}
+
+void OI::StopGearGamepadRumble()
+{
+	gearStickX->SetRumble(XboxController::RumbleType::kLeftRumble, 0);
+	gearStickX->SetRumble(XboxController::RumbleType::kRightRumble, 0);
+}
+
+void OI::StopDriveGamepadRumble()
+{
+	driveStickX->SetRumble(XboxController::RumbleType::kLeftRumble, 0);
+	driveStickX->SetRumble(XboxController::RumbleType::kRightRumble, 0);
 }

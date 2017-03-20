@@ -40,6 +40,11 @@ public:
 
 	ControlConfig getDriveConfig();
 	ControlConfig getGearConfig();
+
+	void RumbleDriveGamepad(double value);
+	void RumbleGearGamepad(double value);
+	void StopDriveGamepadRumble();
+	void StopGearGamepadRumble();
 };
 
 #endif
