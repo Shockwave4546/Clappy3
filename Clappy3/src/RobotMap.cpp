@@ -74,6 +74,7 @@ void RobotMap::init() {
     	lw->AddActuator("GearArm", "Solenoid", gearShootSolenoid);
 
 
+
     climbMotor.reset(new VictorSP(6));
     lw->AddActuator("Climber", "ClimbMotor", std::static_pointer_cast<VictorSP>(climbMotor));
     climbMotor->StopMotor();

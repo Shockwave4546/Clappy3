@@ -12,6 +12,8 @@ GearArm::GearArm() : Subsystem("GearArm") {
 
 	m_idealPosition = Position::NOT_INITIALIZED;
 
+	CloseShoot();
+
 }
 
 void GearArm::InitDefaultCommand() {

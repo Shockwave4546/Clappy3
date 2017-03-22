@@ -61,8 +61,11 @@ OI::OI() {
 	    triggerLb.reset(new JoystickButton(gearStickX.get(), 7));
 	    triggerLb->WhenPressed(new ToggleGearPCM(PCMStatus::OPENED));
 
+	    /*
 	    button4a.reset(new JoystickButton(gearStickX.get(), 1));
 	    button4a->WhenPressed(new AutoPlaceGear());
+		*/
+	    button4a = nullptr;
 
 	    button5b.reset(new JoystickButton(gearStickX.get(), 2));
 	    button5b->WhenPressed(new SetShoot(Direction::REVERSE)/*AutoGrabGearFromGround()*/);

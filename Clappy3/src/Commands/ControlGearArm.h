@@ -3,6 +3,7 @@
 
 #include "Commands/Subsystem.h"
 #include "../Robot.h"
+#include <ctime>
 
 /**
  *
@@ -22,6 +23,8 @@ private:
 	std::shared_ptr<XboxController> gearStick;
 	double m_speed{ 0 };
 	double m_timeout{ -1 };
+	std::time_t m_timer;
+	int current_time{ -1 };
 };
 
 #endif
