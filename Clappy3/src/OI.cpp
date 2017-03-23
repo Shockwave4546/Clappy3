@@ -15,7 +15,7 @@
 OI::OI() {
 
 	m_driveConfig = ControlConfig::XBOXCONTOLLER;
-	m_gearConfig = ControlConfig::DISABLED;
+	m_gearConfig = ControlConfig::XBOXCONTOLLER;
 
 	switch (m_driveConfig)
 	{
