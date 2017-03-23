@@ -8,7 +8,7 @@ GearPCM::GearPCM() : Subsystem("GearPCM") {
 	solenoid = RobotMap::gearPCMSolenoid;
 
 	SetGearPCM(PCMStatus::OPENED);
-	StartCompressor();
+	//StartCompressor();
 
 }
 
@@ -25,6 +25,8 @@ void GearPCM::SetGearPCM(PCMStatus status)
 		else
 			solenoid->Set(frc::DoubleSolenoid::Value::kForward);
 	}
+	else
+		frc::SmartDashboard::PutString("gearpcm works", "nope");
 }
 
 PCMStatus GearPCM::GetPCMStatus()

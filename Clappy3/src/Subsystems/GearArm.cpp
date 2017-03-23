@@ -45,19 +45,19 @@ void GearArm::SetIdealPosition(Position position)
 
 void GearArm::OpenShoot()
 {
-	if (SolenoidP() && !ShootOpened())
+	if (SolenoidP())
 	{
 		solenoid->Set(frc::DoubleSolenoid::Value::kForward);
-		frc::Wait(1);
+		//frc::Wait(1);
 	}
 }
 
 void GearArm::CloseShoot()
 {
-	if (SolenoidP() && ShootOpened())
+	if (SolenoidP())
 	{
 		solenoid->Set(frc::DoubleSolenoid::Value::kReverse);
-		frc::Wait(2.5);
+		//frc::Wait(2.5);
 	}
 }
 

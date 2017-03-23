@@ -31,6 +31,7 @@ void DriveTeleop::Execute() {
 		m_X = -driveStickX->GetX(XboxController::kLeftHand);
 		m_Y = -driveStickX->GetY(XboxController::kLeftHand);
 		m_Z = -driveStickX->GetX(XboxController::kRightHand);
+		m_sens = 0.5;
 	}
 
 	Robot::driveTrain->ControlDriveTrain(m_X, m_Y, m_Z, m_sens);

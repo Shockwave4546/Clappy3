@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "Commands/AutoMovePastTheLine.h"
 
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 std::shared_ptr<GearPCM> Robot::gearPCM;

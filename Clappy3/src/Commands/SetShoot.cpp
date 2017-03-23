@@ -16,7 +16,7 @@ void SetShoot::Initialize() {
 			Robot::gearArm->OpenShoot();
 		else
 		{
-			Robot::oi->RumbleGearGamepad(0.5);
+			Robot::oi->RumbleGearGamepad(1);
 			frc::Wait(0.5);
 			Robot::oi->StopGearGamepadRumble();
 		}
@@ -27,7 +27,7 @@ void SetShoot::Initialize() {
 			Robot::gearArm->CloseShoot();
 		else
 		{
-			Robot::oi->RumbleGearGamepad(0.5);
+			Robot::oi->RumbleGearGamepad(1);
 			frc::Wait(0.5);
 			Robot::oi->StopGearGamepadRumble();
 		}

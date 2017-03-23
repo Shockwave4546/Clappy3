@@ -58,7 +58,7 @@ OI::OI() {
 	    triggerRb.reset(new JoystickButton(gearStickX.get(), 6)); //Rb
 	    triggerRb->WhenPressed(new ToggleGearPCM(PCMStatus::CLOSED));
 
-	    triggerLb.reset(new JoystickButton(gearStickX.get(), 7));
+	    triggerLb.reset(new JoystickButton(gearStickX.get(), 5));
 	    triggerLb->WhenPressed(new ToggleGearPCM(PCMStatus::OPENED));
 
 	    /*
