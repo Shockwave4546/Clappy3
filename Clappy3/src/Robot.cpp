@@ -14,10 +14,12 @@ void Robot::RobotInit() {
 	gearCam.SetResolution(640, 480);
 	frc::Wait(1);
 
+	/*
 	backCam = CameraServer::GetInstance()->StartAutomaticCapture(1);
 	frc::Wait(1);
 	backCam.SetResolution(640, 480);
 	frc::Wait(1);
+	*/
 
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
