@@ -13,19 +13,19 @@ void Robot::RobotInit() {
 	frc::Wait(1);
 	gearCam.SetResolution(640, 480);
 	frc::Wait(1);
-	/*
+
 	backCam = CameraServer::GetInstance()->StartAutomaticCapture(1);
 	frc::Wait(1);
 	backCam.SetResolution(640, 480);
 	frc::Wait(1);
-	*/
+
     driveTrain.reset(new DriveTrain());
     gearPCM.reset(new GearPCM());
     gearArm.reset(new GearArm());
     climber.reset(new Climber());
 	oi.reset(new OI());
 
-	autonomousCommand.reset(new AutonomousCommand());
+	//autonomousCommand.reset(new AutonomousCommand());
 
   }
 
@@ -38,6 +38,9 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+
+	autonomousCommand.reset(new AutoMovePastTheLine());
+
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }
@@ -47,7 +50,6 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
 
