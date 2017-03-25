@@ -12,6 +12,7 @@ DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
     center = RobotMap::driveTrainCenter;
 
     m_direction = Direction::FORWARD;
+    m_slow = Slow::DEACTIVATED;
 
 }
 
@@ -19,11 +20,14 @@ void DriveTrain::InitDefaultCommand() {
 
 	SetDefaultCommand(new DriveTeleop());
 	m_direction = Direction::FORWARD;
+	m_slow = Slow::DEACTIVATED;
 
 }
 
 void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens)
 {
+	if (m_slow == Slow::ACTIVATED)
+		sens *= 0.5;
 	if (m_direction == Direction::FORWARD)
 	{
 		topLeft->Set(calc::DriveSpeed(calc::DriveMotorLeft(y, z), sens));
@@ -66,9 +70,22 @@ void DriveTrain::ChangeDirection()
 		m_direction = Direction::FORWARD;
 }
 
+void DriveTrain::ToggleSlow()
+{
+	if (m_slow == Slow::ACTIVATED)
+		m_slow = Slow::DEACTIVATED;
+	else
+		m_slow = Slow::ACTIVATED;
+}
+
 void DriveTrain::SetDirection(Direction direction)
 {
 	m_direction = direction;
+}
+
+void DriveTrain::SetSlow(Slow slow)
+{
+	m_slow = slow;
 }
 
 
@@ -87,6 +104,11 @@ std::string DriveTrain::GetDirectionS()
 		return "Forward";
 	else
 		return "Reverse";
+}
+
+std::string DriveTrain::GetSlowS()
+{
+	return (m_slow == Slow::DEACTIVATED) ? "Deactivated" : "Activated";
 }
 
 double DriveTrain::GetMotorD(DriveMotor motor)

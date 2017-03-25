@@ -10,6 +10,12 @@ enum Direction
 	REVERSE
 };
 
+enum Slow
+{
+	ACTIVATED,
+	DEACTIVATED
+};
+
 enum DriveMotor
 {
 	TOP_LEFT,
@@ -33,6 +39,7 @@ private:
 	std::shared_ptr<SpeedController> bottomRight;
 	std::shared_ptr<SpeedController> center;
 	Direction m_direction;
+	Slow m_slow;
 
 public:
 
@@ -48,12 +55,16 @@ public:
 
 	void SetDirection(Direction direction);
 
+	void ToggleSlow();
 
+	void SetSlow(Slow slow);
 
 
 	int GetDirection();
 
 	std::string GetDirectionS();
+
+	std::string GetSlowS();
 
 	double GetMotorD(DriveMotor motor);
 

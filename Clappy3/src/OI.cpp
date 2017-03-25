@@ -11,6 +11,7 @@
 #include "Commands/ToggleGearPCM.h"
 #include "Commands/ToggleRobotDirection.h"
 #include "Commands/SetShoot.h"
+#include "Commands/ToggleSlow.h"
 
 OI::OI() {
 
@@ -36,6 +37,9 @@ OI::OI() {
 
 	    drivetriggerRb.reset(new JoystickButton(driveStickX.get(), 6)); //Rb
 	    drivetriggerRb->WhenPressed(new ToggleRobotDirection());
+
+	    drivetriggerLb.reset(new JoystickButton(driveStickX.get(), 5)); //Lb
+	    drivetriggerLb->WhenPressed(new ToggleSlow());
 
 	    break;
 	}

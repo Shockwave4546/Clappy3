@@ -10,12 +10,12 @@ std::shared_ptr<Climber> Robot::climber;
 void Robot::RobotInit() {
 	RobotMap::init();
 
+	/*
 	gearCam = CameraServer::GetInstance()->StartAutomaticCapture(0);
 	frc::Wait(1);
 	gearCam.SetResolution(640, 480);
 	frc::Wait(1);
 
-	/*
 	backCam = CameraServer::GetInstance()->StartAutomaticCapture(1);
 	frc::Wait(1);
 	backCam.SetResolution(640, 480);
@@ -65,6 +65,7 @@ void Robot::TeleopPeriodic() {
 
 	SmartDashboard::PutString("Robot Direction", driveTrain->GetDirectionS());
 	SmartDashboard::PutString("GearPCM Status", gearPCM->GetPCMStatusS());
+	SmartDashboard::PutString("Slow", driveTrain->GetSlowS());
 	//SmartDashboard::PutBoolean("Tracking", true);
 	//SmartDashboard::PutString("Target", "hook");
 
