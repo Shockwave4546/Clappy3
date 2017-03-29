@@ -12,25 +12,35 @@ void SetShoot::Initialize() {
 
 	if (m_direction == Direction::FORWARD)
 	{
-		if (Robot::gearArm->GetHomeSwitch())
-			Robot::gearArm->OpenShoot();
-		else
+		if (!Robot::gearArm->Override())
 		{
-			Robot::oi->RumbleGearGamepad(1);
-			frc::Wait(0.5);
-			Robot::oi->StopGearGamepadRumble();
+			if (Robot::gearArm->GetHomeSwitch())
+				Robot::gearArm->OpenShoot();
+			else
+			{
+				Robot::oi->RumbleGearGamepad(1);
+				frc::Wait(0.5);
+				Robot::oi->StopGearGamepadRumble();
+			}
 		}
+		else
+			Robot::gearArm->OpenShoot();
 	}
 	else
 	{
-		if (Robot::gearArm->GetHomeSwitch())
-			Robot::gearArm->CloseShoot();
-		else
+		if (!Robot::gearArm->Override())
 		{
-			Robot::oi->RumbleGearGamepad(1);
-			frc::Wait(0.5);
-			Robot::oi->StopGearGamepadRumble();
+			if (Robot::gearArm->GetHomeSwitch())
+				Robot::gearArm->CloseShoot();
+			else
+			{
+				Robot::oi->RumbleGearGamepad(1);
+				frc::Wait(0.5);
+				Robot::oi->StopGearGamepadRumble();
+			}
 		}
+		else
+			Robot::gearArm->CloseShoot();
 	}
 
 }

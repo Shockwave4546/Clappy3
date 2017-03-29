@@ -7,7 +7,7 @@ GearPCM::GearPCM() : Subsystem("GearPCM") {
 	compressor = RobotMap::gearPCMCompressor;
 	solenoid = RobotMap::gearPCMSolenoid;
 
-	SetGearPCM(PCMStatus::OPENED);
+	//SetGearPCM(PCMStatus::CLOSED);
 	//StartCompressor();
 
 }

@@ -23,6 +23,6 @@ AutoMovePastTheLine::AutoMovePastTheLine() {
 	 */
 
 	Robot::driveTrain->SetDirection(Direction::REVERSE);
-	AddSequential(new ControlDriveTrain(0, 1, 0, 0.5));
+	AddSequential(new ControlDriveTrain(0, 1, 0, 1.5));
 
 }

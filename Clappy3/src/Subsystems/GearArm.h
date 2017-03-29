@@ -27,6 +27,7 @@ private:
 	std::shared_ptr<DigitalInput> homeSwitch;
 	std::shared_ptr<DoubleSolenoid> solenoid;
 	Position m_idealPosition;
+	bool s_override{ false };
 	inline bool SolenoidP();
 
 public:
@@ -39,6 +40,7 @@ public:
 	void SetIdealPosition(Position position);
 	void StopGearArmMotor();
 
+	void OverrideSwitch();
 
 
 	void OpenShoot();
@@ -46,6 +48,7 @@ public:
 	bool ShootOpened();
 	void Rumble();
 
+	bool Override();
 	bool GetHomeSwitch();
 	Position GetIdealPosition();
 

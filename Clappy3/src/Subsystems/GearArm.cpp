@@ -12,7 +12,7 @@ GearArm::GearArm() : Subsystem("GearArm") {
 
 	m_idealPosition = Position::NOT_INITIALIZED;
 
-	CloseShoot();
+	//CloseShoot();
 
 }
 
@@ -26,7 +26,7 @@ void GearArm::ControlGearArmMotor(double speed)
 	if (speed > 0 && GetHomeSwitch())
 		StopGearArmMotor();
 	else if (speed > 0)
-		gearArmMotor->Set(speed);
+		gearArmMotor->Set(speed * 0.75);
 	else
 		gearArmMotor->Set(speed * 0.5);
 }
@@ -72,6 +72,16 @@ bool GearArm::ShootOpened()
 bool GearArm::GetHomeSwitch()
 {
 	return homeSwitch->Get();
+}
+
+bool GearArm::Override()
+{
+	return s_override;
+}
+
+void GearArm::OverrideSwitch()
+{
+	s_override = true;
 }
 
 Position GearArm::GetIdealPosition()

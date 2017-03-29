@@ -40,7 +40,9 @@ private:
 	std::shared_ptr<SpeedController> center;
 	Direction m_direction;
 	Slow m_slow;
-
+	double right_res{ 0 };
+	double left_res{ 0 };
+	double ratio{ 1 };
 public:
 
 	DriveTrain();

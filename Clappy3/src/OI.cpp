@@ -12,6 +12,7 @@
 #include "Commands/ToggleRobotDirection.h"
 #include "Commands/SetShoot.h"
 #include "Commands/ToggleSlow.h"
+#include "Commands/OverrideSwitch.h"
 
 OI::OI() {
 
@@ -65,11 +66,8 @@ OI::OI() {
 	    triggerLb.reset(new JoystickButton(gearStickX.get(), 5));
 	    triggerLb->WhenPressed(new ToggleGearPCM(PCMStatus::OPENED));
 
-	    /*
-	    button4a.reset(new JoystickButton(gearStickX.get(), 1));
-	    button4a->WhenPressed(new AutoPlaceGear());
-		*/
-	    button4a = nullptr;
+	    button4a.reset(new JoystickButton(gearStickX.get(), 8)); //start
+	    button4a->WhenPressed(new OverrideSwitch());
 
 	    button5b.reset(new JoystickButton(gearStickX.get(), 2));
 	    button5b->WhenPressed(new SetShoot(Direction::REVERSE)/*AutoGrabGearFromGround()*/);

@@ -22,18 +22,21 @@ void ControlGearArm::Initialize() {
 void ControlGearArm::Execute() {
 
 	if (gearStick != nullptr)
-		Robot::gearArm->ControlGearArmMotor(0.5 * -gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand));
+		Robot::gearArm->ControlGearArmMotor(calc::DriveSpeed(-gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand), 1));
 	else
 		Robot::gearArm->ControlGearArmMotor(m_speed);
 	if (Robot::gearArm->GetHomeSwitch() && gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand) < 0)
 	{
-		Robot::gearArm->StopGearArmMotor();
-		Robot::oi->RumbleGearGamepad(0.5);
+		if (Robot::gearArm->Override())
+			Robot::gearArm->ControlGearArmMotor(calc::DriveSpeed(-gearStick->GetY(frc::Joystick::JoystickHand::kLeftHand), 1));
+		else
+		{
+			Robot::gearArm->StopGearArmMotor();
+			Robot::oi->RumbleGearGamepad(0.5);
+		}
 	}
 	else
-	{
 		Robot::oi->StopGearGamepadRumble();
-	}
 
 }
 

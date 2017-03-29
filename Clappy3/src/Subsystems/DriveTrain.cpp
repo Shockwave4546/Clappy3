@@ -2,6 +2,7 @@
 #include "../RobotMap.h"
 #include "../Calculations.h"
 #include "../Commands/DriveTeleop.h"
+#include "../Robot.h"
 
 DriveTrain::DriveTrain() : Subsystem("DriveTrain") {
 
@@ -27,29 +28,50 @@ void DriveTrain::InitDefaultCommand() {
 void DriveTrain::ControlDriveTrain(double x, double y, double z, double sens)
 {
 	if (m_slow == Slow::ACTIVATED)
-		sens *= 0.5;
+	{
+		z = 0;
+		Robot::oi->RumbleDriveGamepad(0.5);
+	}
+	else
+		Robot::oi->StopDriveGamepadRumble();
+	right_res = calc::DriveSpeed(calc::DriveMotorRight(y, z), sens);
+	left_res = calc::DriveSpeed(calc::DriveMotorLeft(y, z), sens);
 	if (m_direction == Direction::FORWARD)
 	{
-		topLeft->Set(calc::DriveSpeed(calc::DriveMotorLeft(y, z), sens));
-		topRight->Set(calc::DriveSpeed(calc::DriveMotorRight(y, z), sens));
-		bottomLeft->Set(calc::DriveSpeed(calc::DriveMotorLeft(y, z), sens));
-		bottomRight->Set(calc::DriveSpeed(calc::DriveMotorRight(y, z), sens));
-		center->Set(x);
+		/*
+		if (right_res < 0)
+			right_res *= 0.9;
+		if (left_res > 0)
+			left_res *= 0.9;
+			*/
+		topLeft->Set(left_res);
+		topRight->Set(right_res);
+		bottomLeft->Set(left_res);
+		bottomRight->Set(right_res);
+		//center->Set(x);
 	}
 	else
 	{
-		topLeft->Set(calc::DriveSpeed(-calc::DriveMotorRight(y, z), sens));
-		topRight->Set(calc::DriveSpeed(-calc::DriveMotorLeft(y, z), sens));
-		bottomLeft->Set(calc::DriveSpeed(-calc::DriveMotorRight(y, z), sens));
-		bottomRight->Set(calc::DriveSpeed(-calc::DriveMotorLeft(y, z), sens));
-		center->Set(-x);
+		/*
+		if (right_res > 0)
+			right_res *= 0.9;
+		if (left_res < 0)
+			left_res *= 0.9;
+			*/
+		topLeft->Set(-right_res);
+		topRight->Set(-left_res);
+		bottomLeft->Set(-right_res);
+		bottomRight->Set(-left_res);
+		//center->Set(-x);
 	}
 
-	SmartDashboard::PutNumber("topLeft", topLeft->Get());
-	SmartDashboard::PutNumber("topRight", topRight->Get());
+	SmartDashboard::PutNumber("topLeft", left_res);//topLeft->Get());
+	SmartDashboard::PutNumber("topRight", right_res);//topRight->Get());
 	SmartDashboard::PutNumber("bottomLeft", bottomLeft->Get());
 	SmartDashboard::PutNumber("bottomRight", bottomRight->Get());
 	SmartDashboard::PutNumber("center", center->Get());
+	SmartDashboard::PutNumber("y", y);
+	SmartDashboard::PutNumber("z", z);
 
 }
 
