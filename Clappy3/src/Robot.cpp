@@ -28,7 +28,7 @@ void Robot::RobotInit() {
     climber.reset(new Climber());
 	oi.reset(new OI());
 
-	//autonomousCommand.reset(new AutonomousCommand());
+	autonomousCommand.reset(new AutonomousCommand());
 
   }
 
@@ -42,7 +42,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 
-	autonomousCommand.reset(new AutoMovePastTheLine());
+	//autonomousCommand.reset(new AutoMovePastTheLine());
 
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
